@@ -1,6 +1,6 @@
 import {env, app} from '../config.js';
 import jwt from 'jsonwebtoken';
-import { addAdmin, getAdmins } from '../services/admin.services.js';
+import { addAdmin, getAdmins, getAdmin } from '../services/admin.services.js';
 
 async function signup(req, res)
 {
@@ -9,6 +9,14 @@ async function signup(req, res)
         const payload = {username, fullname, password};
         const token = jwt.sign(payload, env.JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
         req.session._id = token;
+
+        const admin = await getAdmin(username);
+
+        if(admin?.username === username)
+        {
+            res.status(403).send('Username already exist');
+            return;
+        }
 
         await addAdmin({username, fullname, password});
         res.status(200).send({});
@@ -22,12 +30,6 @@ async function signup(req, res)
 async function signin(req, res)
 {
     try{
-        console.log('session_id', req.session._id);
-        if(req.session._id)
-        {
-            res.send('Aldready signin');
-        }
-
         const {username, password} = req.body;
 
         let token;
@@ -45,7 +47,7 @@ async function signin(req, res)
         }
         else
         {
-            throw new Error('Please Signup');
+            res.status(401).send('Please Signup');
         }
     }
     catch(e)

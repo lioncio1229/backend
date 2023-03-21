@@ -19,9 +19,13 @@ const getAdmins = async () => {
     return admins;
 }
 
+const getAdmin = async (username) => {
+    return await getAdminCollections().findOne({username});
+}
+
 const addAdmin = async (admin) => {
     await getAdminCollections().insertOne(admin);
     return admin;
 }
 
-export {getAdmins, addAdmin};
+export {getAdmins, getAdmin, addAdmin};

@@ -8,8 +8,6 @@ async function signup(req, res)
         const {username, fullname, password} = req.body;
         const payload = {username, fullname, password};
         const token = jwt.sign(payload, env.JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
-        req.session._id = token;
-
         const admin = await getAdmin(username);
 
         if(admin?.username === username)
@@ -19,6 +17,7 @@ async function signup(req, res)
         }
 
         await addAdmin({username, fullname, password});
+        req.session.accessToken = token;
         res.status(200).send({});
     }
     catch(e)
@@ -43,6 +42,7 @@ async function signin(req, res)
         
         if(token)
         {
+            req.session.accessToken = token;
             res.status(200).send({});
         }
         else
@@ -56,7 +56,14 @@ async function signin(req, res)
     }
 }
 
+export function signout(req, res)
+{
+    console.log('accessToken: ', req.session.accessToken);
+    res.send('Logout');
+}
+
 export default {
     signup,
-    signin
+    signin,
+    signout,
 }

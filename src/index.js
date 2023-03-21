@@ -8,7 +8,7 @@ import connect from './services/connection.js';
 
 const app = express();
 const port = 3000;
-const maxAge = 60 * 10; //ten minutes
+const maxAge = 60 * 60 * 10; //ten minutes
 
 const corsOptions = {
     credentials: true,

@@ -1,4 +1,4 @@
-import {JWT_SECRET_KEY} from '../config.js';
+import {env} from '../config.js';
 
 async function validation(req, res, next)
 {
@@ -8,7 +8,7 @@ async function validation(req, res, next)
         {
             const accessToken = authorization.split(' ')[1];
 
-            jwt.verify(accessToken, JWT_SECRET_KEY, (err, decoded) => {
+            jwt.verify(accessToken, env.JWT_SECRET_KEY, (err, decoded) => {
                 if(err) throw new Error('Invalid Token');
                 else{
                     res.send(accessToken);

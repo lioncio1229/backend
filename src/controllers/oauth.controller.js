@@ -1,17 +1,17 @@
-import {JWT_SECRET_KEY, app} from '../config.js';
+import {env, app} from '../config.js';
 import jwt from 'jsonwebtoken';
-
-const adminsMockDb = [];
+import { addAdmin, getAdmins } from '../services/admin.services.js';
 
 async function signup(req, res)
 {
     try{
         const {username, fullname, password} = req.body;
         const payload = {username, fullname, password};
-        const token = jwt.sign(payload, JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
+        const token = jwt.sign(payload, env.JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
+        req.session._id = token;
 
-        adminsMockDb.push({username, fullname, password});
-        res.send(token);
+        await addAdmin({username, fullname, password});
+        res.status(200).send({});
     }
     catch(e)
     {
@@ -22,19 +22,26 @@ async function signup(req, res)
 async function signin(req, res)
 {
     try{
+        console.log('session_id', req.session._id);
+        if(req.session._id)
+        {
+            res.send('Aldready signin');
+        }
+
         const {username, password} = req.body;
 
         let token;
-        adminsMockDb.forEach(admin => {
+        const admins = await getAdmins();
+        admins.forEach(admin => {
             if(admin.username === username && admin.password === password)
             {
-                token = jwt.sign(admin, JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
+                token = jwt.sign(admin, env.JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
             }
         });
         
         if(token)
         {
-            res.send(token);
+            res.status(200).send({});
         }
         else
         {

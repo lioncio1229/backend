@@ -1,6 +1,7 @@
 import {env, app} from '../config.js';
 import jwt from 'jsonwebtoken';
-import { addAdmin, getAdmins, getAdmin, blacklistToken } from '../services/admin.services.js';
+import { addAdmin, getAdmins, getAdmin } from '../services/admin.services.js';
+import { blacklistToken } from '../services/accessTokens.services.js';
 
 export async function signup(req, res)
 {
@@ -69,7 +70,7 @@ export async function signout(req, res)
             res.status(200).send('Already Logout');
         }
         else{
-            // await blacklistToken(req.session.accessToken);
+            await blacklistToken(req.session.accessToken);
             req.session.accessToken = null;
             res.status(200).send('Logout');
         }

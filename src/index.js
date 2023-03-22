@@ -3,12 +3,11 @@ import cors from 'cors';
 import sessions from 'express-session';
 import { env } from './config.js';
 import oauthRouter from './routes/oauth.router.js';
-import validation from './middleware/validation.js';
 import connect from './services/connection.js';
 
 const app = express();
 const port = 3000;
-const maxAge = 60 * 60 * 10; //ten minutes
+const maxAge = 1000  * 30
 
 const corsOptions = {
     credentials: true,

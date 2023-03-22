@@ -11,17 +11,6 @@ function getAdminCollections() {
     }
 };
 
-function getTokenCollections() {
-    try
-    {
-        return client.db('database').collection('invalid_tokens');
-    }
-    catch(e) 
-    {
-        console.log(e.message);
-    }
-};
-
 export async function getAdmins()
 {
     const cursor = getAdminCollections().find();
@@ -39,15 +28,4 @@ export async function addAdmin(admin)
 {
     await getAdminCollections().insertOne(admin);
     return admin;
-}
-
-export async function blacklistToken(accessToken)
-{
-    await getTokenCollections().insertOne({accessToken});
-};
-
-export async function isTokenBlacklisted(accessToken)
-{
-    const result = await getTokenCollections().findOne({accessToken});
-    return result ? true : false;
 }

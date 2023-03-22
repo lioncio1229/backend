@@ -5,12 +5,10 @@ async function validation(req, res, next)
 {
     try{
         const accessToken = req.session.accessToken;
-
         jwt.verify(accessToken, env.JWT_SECRET_KEY, (err, decoded) => {
-            if(err) throw new Error('Invalid Token');
-            else{
-                next();
-            }
+            if(err) req.hasValidationError = true;
+            else req.hasValidationError = false;
+            next();
         });
     }
     catch(e)

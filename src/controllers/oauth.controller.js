@@ -1,8 +1,8 @@
 import {env, app} from '../config.js';
 import jwt from 'jsonwebtoken';
-import { addAdmin, getAdmins, getAdmin } from '../services/admin.services.js';
+import { addAdmin, getAdmins, getAdmin, blacklistToken } from '../services/admin.services.js';
 
-async function signup(req, res)
+export async function signup(req, res)
 {
     try{
         const {username, fullname, password} = req.body;
@@ -26,9 +26,14 @@ async function signup(req, res)
     }
 }
 
-async function signin(req, res)
+export async function signin(req, res)
 {
     try{
+        if(!req.hasValidationError)
+        {
+            throw new Error('Already Signin');
+        }
+
         const {username, password} = req.body;
 
         let token;
@@ -56,14 +61,21 @@ async function signin(req, res)
     }
 }
 
-export function signout(req, res)
+export async function signout(req, res)
 {
-    console.log('accessToken: ', req.session.accessToken);
-    res.send('Logout');
-}
-
-export default {
-    signup,
-    signin,
-    signout,
+    try{
+        if(req.hasValidationError)
+        {
+            res.status(200).send('Already Logout');
+        }
+        else{
+            // await blacklistToken(req.session.accessToken);
+            req.session.accessToken = null;
+            res.status(200).send('Logout');
+        }
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
 }

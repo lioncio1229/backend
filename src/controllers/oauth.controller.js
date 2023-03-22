@@ -1,7 +1,7 @@
 import {env, app} from '../config.js';
 import jwt from 'jsonwebtoken';
-import { addAdmin, getAdmins, getAdmin } from '../services/admin.services.js';
-import { blacklistToken } from '../services/accessTokens.services.js';
+import { addAdmin, getAdmins, getAdmin } from '../services/admin/admin.js';
+import { blacklistToken } from '../services/accessTokens.js';
 
 export async function signup(req, res)
 {

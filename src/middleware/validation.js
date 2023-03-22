@@ -1,6 +1,6 @@
 import {env} from '../config.js';
 import jwt from 'jsonwebtoken';
-import { isTokenBlacklisted } from '../services/accessTokens.services.js';
+import { isTokenBlacklisted } from '../services/accessTokens.js';
 
 async function validation(req, res, next)
 {

@@ -1,15 +1,4 @@
-import { client } from "./connection.js";
-
-function getAdminCollections() {
-    try
-    {
-        return client.db('database').collection('admins');
-    }
-    catch(e) 
-    {
-        console.log(e.message);
-    }
-};
+import { getAdminCollections } from "../databases.js";
 
 export async function getAdmins()
 {

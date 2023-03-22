@@ -3,11 +3,12 @@ import cors from 'cors';
 import sessions from 'express-session';
 import { env } from './config.js';
 import oauthRouter from './routes/oauth.router.js';
+import customerRouter from './routes/admin/customer.router.js';
 import connect from './services/connection.js';
 
 const app = express();
 const port = 3000;
-const maxAge = 1000  * 30
+const maxAge = 1000  * 60 * 2;
 
 const corsOptions = {
     credentials: true,
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/oauth', oauthRouter.router);
+app.use('/api/customer', customerRouter.router);
 
 connect();
 app.listen(port, () => {

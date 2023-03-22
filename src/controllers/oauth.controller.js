@@ -1,14 +1,13 @@
-import {env, app} from '../config.js';
-import jwt from 'jsonwebtoken';
 import { addAdmin, getAdmins, getAdmin } from '../services/admin/admin.js';
 import { blacklistToken } from '../services/accessTokens.js';
+import generateAccessToken from '../utils/generateAccessToken.js';
 
 export async function signup(req, res)
 {
     try{
         const {username, fullname, password} = req.body;
         const payload = {username, fullname, password};
-        const token = jwt.sign(payload, env.JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
+        const token = generateAccessToken(payload);
         const admin = await getAdmin(username);
 
         if(admin?.username === username)
@@ -42,7 +41,7 @@ export async function signin(req, res)
         admins.forEach(admin => {
             if(admin.username === username && admin.password === password)
             {
-                token = jwt.sign(admin, env.JWT_SECRET_KEY, {expiresIn: app.access_token_expiration});
+                token = generateAccessToken(admin);
             }
         });
         

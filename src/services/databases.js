@@ -22,3 +22,8 @@ export function getBlacklistedTokenCollection()
 {
     return getCollectionAtDatabase('blacklisted_tokens');
 }
+
+export function getCustomerCollections()
+{
+    return getCollectionAtDatabase('customers');
+}

@@ -2,9 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import sessions from 'express-session';
 import { env } from './config.js';
-import oauthRouter from './api/auth/oauth.router.js';
-import customerRouter from './api/customers/customer.router.js';
 import connect from './database/connection.js';
+import routes from './routes.js';
 
 const app = express();
 const port = 3000;
@@ -37,14 +36,11 @@ if(env.NODE_ENV === 'production')
 
 app.use(sessions(sessionObj));
 
-app.get('/', (req, res) => {
-    res.send('Welcome to Bogsy Video Store!');
-});
-
-app.use('/api/oauth', oauthRouter.router);
-app.use('/api/customers', customerRouter.router);
+routes(app);
 
 connect();
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+
+export default app;

@@ -27,3 +27,8 @@ export function getCustomerCollections()
 {
     return getCollectionAtDatabase('customers');
 }
+
+export function getVideoCollection()
+{
+    return getCollectionAtDatabase('videos');
+}

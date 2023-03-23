@@ -1,6 +1,6 @@
 import express from 'express';
 import { errors } from '../../config.js';
-import * as customerController from './customer.controller.js';
+import * as customerController from './customer.handler.js';
 import verifyResourceAccess from '../../middleware/validation.js';
 
 const router = express.Router();

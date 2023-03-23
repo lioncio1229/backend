@@ -1,5 +1,5 @@
 import express from 'express';
-import {signin, signup, signout} from './oauth.controller.js';
+import {signin, signup, signout} from './oauth.handler.js';
 const router = express.Router();
 
 router.post('/signup', signup);

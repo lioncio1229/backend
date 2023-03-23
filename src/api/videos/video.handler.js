@@ -60,4 +60,18 @@ export async function updateVideo(req, res)
     }
 }
 
-export default {addVideo, getVideo, updateVideo};
+export async function deleteVideo(req, res)
+{
+    try{
+        const {videoId} = req.params;
+        await videos.deleteVideo(videoId);
+        res.status(200).send(videoId);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
+
+export default {addVideo, getVideo, updateVideo, deleteVideo};

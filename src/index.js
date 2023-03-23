@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import sessions from 'express-session';
 import { env } from './config.js';
-import oauthRouter from './routes/oauth.router.js';
-import customerRouter from './routes/admin/customer.router.js';
-import connect from './services/connection.js';
+import oauthRouter from './api/auth/oauth.router.js';
+import customerRouter from './api/customers/customer.router.js';
+import connect from './database/connection.js';
 
 const app = express();
 const port = 3000;

@@ -1,4 +1,4 @@
-import {getBlacklistedTokenCollection} from '../services/databases.js';
+import {getBlacklistedTokenCollection} from '../../database/databases.js';
 
 export async function blacklistToken(accessToken)
 {

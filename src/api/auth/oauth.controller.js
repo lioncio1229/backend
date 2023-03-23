@@ -1,8 +1,8 @@
-import { addAdmin, getAdmins, getAdmin } from '../services/admin/admin.js';
-import { blacklistToken } from '../services/accessTokens.js';
-import { generateAccessToken, isAccessTokenValid } from '../utils/accessToken.js';
-import { errors } from '../config.js';
-import CustomError from '../utils/customError.js';
+import { addAdmin, getAdmins, getAdmin } from './admin.js';
+import { blacklistToken } from './accessTokens.js';
+import { generateAccessToken, isAccessTokenValid } from '../../helpers/accessToken.js';
+import { errors } from '../../config.js';
+import CustomError from '../../helpers/customError.js';
 
 export async function signup(req, res)
 {

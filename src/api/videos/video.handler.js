@@ -16,16 +16,21 @@ export async function addVideo(req, res)
 export async function getVideo(req, res)
 {
     try{
-        const {videoId} = req.query;
-        if(videoId)
-        {
-            const video = await videos.getVideo(videoId);
-            res.status(200).send(video);
-        }
-        else{
-            const videoList = await videos.getVideos();
-            res.status(200).send(videoList);
-        }
+        const {videoId} = req.params;
+        const video = await videos.getVideo(videoId);
+        res.status(200).send(video);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
+export async function getVideos(req, res)
+{
+    try{
+        const videoList = await videos.getVideos();
+        res.status(200).send(videoList);
     }
     catch(e)
     {
@@ -74,4 +79,4 @@ export async function deleteVideo(req, res)
 }
 
 
-export default {addVideo, getVideo, updateVideo, deleteVideo};
+export default {addVideo, getVideo, getVideos, updateVideo, deleteVideo};

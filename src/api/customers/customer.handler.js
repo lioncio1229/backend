@@ -36,3 +36,16 @@ export async function getCustomers(req, res)
         res.status(500).send(e.message);
     }
 }
+
+export async function updateCustomer(req, res)
+{
+    try{
+        const {username, password} = req.body;
+        await customerManagement.updateCustomer(req.params.username, {username, password});
+        res.status(200).send(username);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}

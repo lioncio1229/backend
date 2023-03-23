@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/', verifyResourceAccess(errors.noAccess), customerController.addCustomer);
 router.get('/', verifyResourceAccess(errors.noAccess), customerController.getCustomers);
+router.put('/:username', verifyResourceAccess(errors.noAccess), customerController.updateCustomer);
 
 export default {router};

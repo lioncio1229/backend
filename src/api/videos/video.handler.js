@@ -16,8 +16,16 @@ export async function addVideo(req, res)
 export async function getVideo(req, res)
 {
     try{
-        const videoList = await videos.getVideo(req.query.videoId);
-        res.status(200).send(videoList);
+        const {videoId} = req.query;
+        if(videoId)
+        {
+            const video = await videos.getVideo(videoId);
+            res.status(200).send(video);
+        }
+        else{
+            const videoList = await videos.getVideos();
+            res.status(200).send(videoList);
+        }
     }
     catch(e)
     {

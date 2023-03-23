@@ -1,30 +1,25 @@
-import {env} from '../config.js';
-import jwt from 'jsonwebtoken';
 import { isTokenBlacklisted } from '../services/accessTokens.js';
+import { verifyAccesstoken } from '../utils/accessToken.js';
+import CustomError from '../utils/customError.js';
 
-async function validation(req, res, next)
+function verifyResourceAccess({message='Error', errorCode=500})
 {
-    try{
-        const accessToken = req.session.accessToken;
-        const _isTokenBlacklisted = await isTokenBlacklisted(accessToken);
-        
-        if(!_isTokenBlacklisted)
-        {
-            jwt.verify(accessToken, env.JWT_SECRET_KEY, (err, decoded) => {
-                if(err) req.hasValidationError = true;
-                else req.hasValidationError = false;
+    return async (req, res, next) => {
+        try{
+            const accessToken = req.session.accessToken;
+            const _isTokenBlacklisted = await isTokenBlacklisted(accessToken);
+            if(_isTokenBlacklisted) throw new CustomError(message, {errorCode});
+            
+            verifyAccesstoken(accessToken, (err, decoded) => {
+                if(err) throw new CustomError(message, {errorCode});
             });
+            next();
         }
-        else
+        catch(e)
         {
-            req.hasValidationError = true;
+            res.status(e.options?.errorCode).send(e.message);
         }
-        next();
-    }
-    catch(e)
-    {
-        res.status(500).send(e.message);
     }
 }
 
-export default validation;
+export default verifyResourceAccess;

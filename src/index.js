@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/oauth', oauthRouter.router);
-app.use('/api/customer', customerRouter.router);
+app.use('/api/customers', customerRouter.router);
 
 connect();
 app.listen(port, () => {

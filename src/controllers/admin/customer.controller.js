@@ -3,12 +3,6 @@ import * as customerManagement from '../../services/admin/customerManagement.js'
 export async function addCustomer(req, res)
 {
     try{
-        if(req.hasValidationError)
-        {
-            res.status(403).send("You don't have permission to access this resource");
-            return;
-        }
-        
         const {username, password} = req.body;
         if(!username || !password)
         {
@@ -22,7 +16,20 @@ export async function addCustomer(req, res)
             return;
         }
         await customerManagement.addCustomer({username, password});
-        res.status(200).send({});
+        res.status(200).send(username);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
+export async function getCustomers(req, res)
+{
+    try{
+        const customers = await customerManagement.getCustomers();
+        const parsedCustomers = customers.map(customer => customer.username);
+        res.status(200).send(parsedCustomers);
     }
     catch(e)
     {

@@ -1,6 +1,8 @@
 import { addAdmin, getAdmins, getAdmin } from '../services/admin/admin.js';
 import { blacklistToken } from '../services/accessTokens.js';
-import generateAccessToken from '../utils/generateAccessToken.js';
+import { generateAccessToken, isAccessTokenValid } from '../utils/accessToken.js';
+import { errors } from '../config.js';
+import CustomError from '../utils/customError.js';
 
 export async function signup(req, res)
 {
@@ -29,9 +31,11 @@ export async function signup(req, res)
 export async function signin(req, res)
 {
     try{
-        if(!req.hasValidationError)
+
+        if(isAccessTokenValid(req.session.accessToken))
         {
-            throw new Error('Already Signin');
+            const {message, errorCode} = errors.alreadyLogin;
+            throw new CustomError(message, errorCode);
         }
 
         const {username, password} = req.body;
@@ -57,16 +61,18 @@ export async function signin(req, res)
     }
     catch(e)
     {
-        res.status(500).send(e.message);
+        res.status(e.options?.errorCode || 500).send(e.message);
     }
 }
 
 export async function signout(req, res)
 {
     try{
-        if(req.hasValidationError)
+
+        if(!isAccessTokenValid(req.session.accessToken))
         {
-            res.status(200).send('Already Logout');
+            const {message, errorCode} = errors.alreadyLogout;
+            throw new CustomError(message, errorCode);
         }
         else{
             await blacklistToken(req.session.accessToken);
@@ -76,6 +82,6 @@ export async function signout(req, res)
     }
     catch(e)
     {
-        res.status(500).send(e.message);
+        res.status(e.options?.errorCode || 500).send(e.message);
     }
 }

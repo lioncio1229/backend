@@ -17,7 +17,7 @@ export async function getVideos()
 
 export async function getVideo(videoId)
 {
-    return await getVideoCollection().findOne({_id: ObjectId(videoId)});
+    return await getVideoCollection().findOne({_id: new ObjectId(videoId)});
 }
 
 export async function updateVideo(videoId, payload)
@@ -36,6 +36,6 @@ export async function updateVideo(videoId, payload)
 
 export async function deleteVideo(videoId)
 {
-    const result = await getVideoCollection().deleteOne({_id: ObjectId(videoId)});
+    const result = await getVideoCollection().deleteOne({_id: new ObjectId(videoId)});
     return result.deletedCount === 1;
 }

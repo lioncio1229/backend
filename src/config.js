@@ -5,7 +5,7 @@ dotenv.config();
 const env = process.env;
 
 const appSettings = {
-    access_token_expiration: '120s'
+    access_token_expiration: '3600s'
 }
 const errors = {
     alreadyLogin: {message: 'Already Login', errorCode: 406},

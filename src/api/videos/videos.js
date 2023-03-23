@@ -23,9 +23,9 @@ export async function getVideo(videoId)
 export async function updateVideo(videoId, payload)
 {
     await getVideoCollection().updateOne(
-        { _id: ObjectId(videoId) },
+        { _id: new ObjectId(videoId) },
         {
-            $set: { ...payload, _id: ObjectId(videoId) },
+            $set: { ...payload, _id: new ObjectId(videoId) },
         },
         {
             upsert: true

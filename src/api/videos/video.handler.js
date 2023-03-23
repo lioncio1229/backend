@@ -33,4 +33,31 @@ export async function getVideo(req, res)
     }
 }
 
-export default {addVideo, getVideo};
+export async function updateVideo(req, res)
+{
+    try{
+        const {videoId, title, description, category, price, rentingDuration} = req.query;
+        
+        if(!videoId)
+        {
+            throw new Error('Please add videoId parameter');
+        }
+
+        const payload = {};
+
+        if(title) payload.title = title;
+        if(description) payload.description = description;
+        if(category) payload.category = category;
+        if(price) payload.price = price;
+        if(rentingDuration) payload.rentingDuration = rentingDuration;
+
+        await videos.updateVideo(videoId, payload);
+        res.status(200).send(videoId);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
+export default {addVideo, getVideo, updateVideo};

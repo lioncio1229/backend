@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/', verifyResourceAccess(errors.noAccess), videoHandler.addVideo);
 router.get('/', verifyResourceAccess(errors.noAccess), videoHandler.getVideo);
+router.put('/', verifyResourceAccess(errors.noAccess), videoHandler.updateVideo);
 
 export default {router};

@@ -49,3 +49,16 @@ export async function updateCustomer(req, res)
         res.status(500).send(e.message);
     }
 }
+
+export async function deleteCustomer(req, res)
+{
+    try{
+        const {username} = req.params;
+        await customerManagement.deleteCustomer(username);
+        res.status(200).send(username);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}

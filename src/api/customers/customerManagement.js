@@ -44,7 +44,7 @@ export async function updateCustomer(username, payload)
     );
 }
 
-export async function removeCustomer(username)
+export async function deleteCustomer(username)
 {
     const result = await getCustomerCollections().deleteOne({username});
     return result.deletedCount === 1;

@@ -1,18 +1,18 @@
-import { parsedVideos } from '../rents.js';
+const { parsedVideos } = require('../rents.js');
 
 
 test('Testing parsedVideos', () => {
     const videos = [
         {
-          _id: ObjectId("641cea53eb9abdd7550e8312"),
+          _id: "641cea53eb9abdd7550e8312",
           title: 'Zilzo the action',
           description: 'Baby love zilzo',
           price: '100',
           category: 'DVD'
         },
-        { _id: ObjectId("641c2469aa00b327673653c1"), category: 'DVD' },
+        { _id: "641c2469aa00b327673653c1", category: 'DVD' },
         {
-          _id: ObjectId("641cf4f96a4167b25aacd08d"),
+          _id: "641cf4f96a4167b25aacd08d",
           title: 'Zilzo the action',
           description: 'Baby love zilzo',
           price: '100'
@@ -21,17 +21,18 @@ test('Testing parsedVideos', () => {
 
     const rents = ['641cf4f96a4167b25aacd08d', '641c2469aa00b327673653c1'];
 
-    const result = [
+    const output = [
         {
-          _id: ObjectId("641cea53eb9abdd7550e8312"),
+          _id: "641cea53eb9abdd7550e8312",
           title: 'Zilzo the action',
           description: 'Baby love zilzo',
           price: '100',
-          category: 'DVD'
+          category: 'DVD',
+          isRenting: false
         },
-        { _id: ObjectId("641c2469aa00b327673653c1"), category: 'DVD', isRenting: true },
+        { _id: "641c2469aa00b327673653c1", category: 'DVD', isRenting: true },
         {
-          _id: ObjectId("641cf4f96a4167b25aacd08d"),
+          _id: "641cf4f96a4167b25aacd08d",
           title: 'Zilzo the action',
           description: 'Baby love zilzo',
           price: '100',
@@ -39,5 +40,79 @@ test('Testing parsedVideos', () => {
         }
     ]
 
-    expect(parsedVideos(videos, rents)).toBe(result);
+    expect(parsedVideos(videos, rents)).toEqual(output);
+});
+
+
+test('Testing parsedVideos 2', () => {
+  const videos = [
+      {
+        _id: "641cea53eb9abdd7550e8312",
+        title: 'Zilzo the action',
+        description: 'Baby love zilzo',
+        price: '100',
+        category: 'DVD'
+      },
+      {
+        _id: "641cf4f96a4167b25aacd08d",
+        title: 'Zilzo the action',
+        description: 'Baby love zilzo',
+        price: '100'
+      },
+      {
+        _id: "641cf4f96a4267325aacd08d",
+        title: 'Zilzo Movies',
+        description: 'Baby the girl of love',
+        price: '200'
+      },
+  ]
+
+  const rents = [];
+
+  const output = [
+    {
+      _id: "641cea53eb9abdd7550e8312",
+      title: 'Zilzo the action',
+      description: 'Baby love zilzo',
+      price: '100',
+      category: 'DVD',
+      isRenting: false,
+    },
+    {
+      _id: "641cf4f96a4167b25aacd08d",
+      title: 'Zilzo the action',
+      description: 'Baby love zilzo',
+      price: '100',
+      isRenting: false,
+    },
+    {
+      _id: "641cf4f96a4267325aacd08d",
+      title: 'Zilzo Movies',
+      description: 'Baby the girl of love',
+      price: '200',
+      isRenting: false,
+    },
+  ]
+
+  expect(parsedVideos(videos, rents)).toEqual(output);
+});
+
+test('Testing parsedVideos 3', () => {
+  const videos = []
+
+  const rents = [];
+
+  const output = []
+
+  expect(parsedVideos(videos, rents)).toEqual(output);
+});
+
+test('Testing parsedVideos 4', () => {
+  const videos = []
+
+  const rents = ['641cf4f96a4167b25aacd08d', '641c2469aa00b327673653c1'];
+
+  const output = [];
+
+  expect(parsedVideos(videos, rents)).toEqual(output);
 });

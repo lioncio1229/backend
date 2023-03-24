@@ -40,12 +40,11 @@ async function removeRent(username, videoId)
 
 function parsedVideos(videos, rents)
 {
-    let start = 0;
     return videos.map(video => {
         let changes = {
             isRenting: false
         }
-        for(let i = start; i < rents.length; i++)
+        for(let i = 0; i < rents.length; i++)
         {
             const rentId = rents[i];
             if(rentId === video._id)
@@ -53,7 +52,6 @@ function parsedVideos(videos, rents)
                 changes = {
                     isRenting: true
                 }
-                start++;
                 break;
             }
         }

@@ -40,10 +40,36 @@ async function deleteVideo(videoId)
     return result.deletedCount === 1;
 }
 
+function parseVideos(videos, rents)
+{
+    return videos.map(video => {
+        let changes = {
+            isRenting: false
+        }
+        for(let i = 0; i < rents.length; i++)
+        {
+            const rentId = rents[i];
+            if(rentId === video._id.toString())
+            {
+                changes = {
+                    isRenting: true
+                }
+                break;
+            }
+        }
+
+        return {
+            ...video,
+            ...changes
+        }
+    });
+}
+
 module.exports = {
     addVideo,
     getVideo,
     getVideos,
     updateVideo,
     deleteVideo,
+    parseVideos,
 }

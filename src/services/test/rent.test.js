@@ -1,4 +1,4 @@
-const { parseVideos } = require('../rents.js');
+const { parseVideos } = require('../videos.js');
 
 
 test('Testing parseVideos', () => {

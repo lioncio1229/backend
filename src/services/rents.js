@@ -13,7 +13,7 @@ async function addRent(username, videoId)
         { $push: { list: videoId } },
         { upsert: true }
     );
-    return result.modifiedCount === 1;
+    return result.upsertedCount === 1 || result.modifiedCount === 1;
 }
 
 async function removeRent(username, videoId)
@@ -38,34 +38,8 @@ async function removeRent(username, videoId)
     return false;
 }
 
-function parseVideos(videos, rents)
-{
-    return videos.map(video => {
-        let changes = {
-            isRenting: false
-        }
-        for(let i = 0; i < rents.length; i++)
-        {
-            const rentId = rents[i];
-            if(rentId === video._id)
-            {
-                changes = {
-                    isRenting: true
-                }
-                break;
-            }
-        }
-
-        return {
-            ...video,
-            ...changes
-        }
-    });
-}
-
 module.exports = {
     getRents,
     addRent,
     removeRent,
-    parseVideos,
 };

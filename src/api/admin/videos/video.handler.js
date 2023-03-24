@@ -1,4 +1,4 @@
-import * as videos from "./videos.js";
+import * as videos from "../../../services/videos.js";
 
 
 export async function addVideo(req, res)

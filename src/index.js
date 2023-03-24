@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import sessions from 'express-session';
 import { env } from './config.js';
-import connect from './database/connection.js';
+import connect from './services/connection.js';
 import routes from './routes.js';
 
 const app = express();

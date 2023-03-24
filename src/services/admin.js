@@ -1,4 +1,4 @@
-import { getAdminCollections } from "../../database/databases.js";
+import { getAdminCollections } from "./databases.js";
 
 export async function getAdmins()
 {

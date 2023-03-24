@@ -1,5 +1,5 @@
-import { addAdmin, getAdmins, getAdmin } from './admin.js';
-import { blacklistToken } from './accessTokens.js';
+import { addAdmin, getAdmins, getAdmin } from '../../services/admin.js';
+import { blacklistToken } from '../../services/accessTokens.js';
 import { generateAccessToken, isAccessTokenValid } from '../../helpers/accessToken.js';
 import { errors } from '../../config.js';
 import CustomError from '../../helpers/customError.js';

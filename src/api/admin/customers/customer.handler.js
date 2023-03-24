@@ -1,4 +1,4 @@
-import * as customerManagement from './customerManagement.js';
+import * as customerManagement from '../../../services/customers.js';
 
 export async function addCustomer(req, res)
 {

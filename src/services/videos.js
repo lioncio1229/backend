@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { getVideoCollection } from "../../../database/databases.js";
+import { getVideoCollection } from "./databases.js";
 
 export async function addVideo(payload)
 {

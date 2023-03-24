@@ -1,4 +1,4 @@
-import { getCustomerCollections } from "../../../database/databases.js";
+import { getCustomerCollections } from "./databases.js";
 
 
 export async function addCustomer(payload)

@@ -1,4 +1,4 @@
-import { isTokenBlacklisted } from '../api/auth/accessTokens.js';
+import { isTokenBlacklisted } from '../services/accessTokens.js';
 import { verifyAccesstoken } from '../helpers/accessToken.js';
 import CustomError from '../helpers/customError.js';
 

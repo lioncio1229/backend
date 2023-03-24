@@ -33,10 +33,16 @@ function getVideoCollection()
     return getCollectionAtDatabase('videos');
 }
 
+function getRentCollection()
+{
+    return getCollectionAtDatabase('rents');
+}
+
 module.exports = {
     getCollectionAtDatabase,
     getAdminCollections,
     getBlacklistedTokenCollection,
     getCustomerCollections,
     getVideoCollection,
+    getRentCollection,
 }

@@ -12,6 +12,7 @@ function verifyResourceAccess({message='Error', errorCode=500})
             
             verifyAccesstoken(accessToken, (err, decoded) => {
                 if(err) throw new CustomError(message, {errorCode});
+                else req.username = decoded.username;
             });
             next();
         }

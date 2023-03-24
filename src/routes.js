@@ -1,6 +1,6 @@
 import oauthRouter from './api/auth/oauth.router.js';
-import customerRouter from './api/customers/customer.router.js';
-import videoRouter from './api/videos/video.router.js';
+import customerRouter from './api/admin/customers/customer.router.js';
+import videoRouter from './api/admin/videos/video.router.js';
 
 export default function (app)
 {
@@ -9,8 +9,8 @@ export default function (app)
     });
     
     app.use('/api/oauth', oauthRouter.router);
-    app.use('/api/customers', customerRouter.router);
-    app.use('/api/videos', videoRouter.router);
+    app.use('/api/admin', customerRouter.router);
+    app.use('/api/admin', videoRouter.router);
 }
 
 

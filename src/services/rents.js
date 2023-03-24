@@ -1,4 +1,4 @@
-const { getRentCollection } = "./databases";
+const { getRentCollection } = require("./databases");
 
 async function getRents(username)
 {
@@ -38,7 +38,7 @@ async function removeRent(username, videoId)
     return false;
 }
 
-function parsedVideos(videos, rents)
+function parseVideos(videos, rents)
 {
     return videos.map(video => {
         let changes = {
@@ -67,5 +67,5 @@ module.exports = {
     getRents,
     addRent,
     removeRent,
-    parsedVideos,
+    parseVideos,
 };

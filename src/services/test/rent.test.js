@@ -1,7 +1,7 @@
-const { parsedVideos } = require('../rents.js');
+const { parseVideos } = require('../rents.js');
 
 
-test('Testing parsedVideos', () => {
+test('Testing parseVideos', () => {
     const videos = [
         {
           _id: "641cea53eb9abdd7550e8312",
@@ -40,11 +40,11 @@ test('Testing parsedVideos', () => {
         }
     ]
 
-    expect(parsedVideos(videos, rents)).toEqual(output);
+    expect(parseVideos(videos, rents)).toEqual(output);
 });
 
 
-test('Testing parsedVideos 2', () => {
+test('Testing parseVideos 2', () => {
   const videos = [
       {
         _id: "641cea53eb9abdd7550e8312",
@@ -94,25 +94,25 @@ test('Testing parsedVideos 2', () => {
     },
   ]
 
-  expect(parsedVideos(videos, rents)).toEqual(output);
+  expect(parseVideos(videos, rents)).toEqual(output);
 });
 
-test('Testing parsedVideos 3', () => {
+test('Testing parseVideos 3', () => {
   const videos = []
 
   const rents = [];
 
   const output = []
 
-  expect(parsedVideos(videos, rents)).toEqual(output);
+  expect(parseVideos(videos, rents)).toEqual(output);
 });
 
-test('Testing parsedVideos 4', () => {
+test('Testing parseVideos 4', () => {
   const videos = []
 
   const rents = ['641cf4f96a4167b25aacd08d', '641c2469aa00b327673653c1'];
 
   const output = [];
 
-  expect(parsedVideos(videos, rents)).toEqual(output);
+  expect(parseVideos(videos, rents)).toEqual(output);
 });

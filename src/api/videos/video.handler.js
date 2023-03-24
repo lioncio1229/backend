@@ -4,7 +4,7 @@ import * as videos from "./videos.js";
 export async function addVideo(req, res)
 {
     try{
-        const videoId = await videos.addVideo(req.query);
+        const videoId = await videos.addVideo(req.body);
         res.status(200).send(videoId);
     }
     catch(e)
@@ -41,7 +41,8 @@ export async function getVideos(req, res)
 export async function updateVideo(req, res)
 {
     try{
-        const {videoId, title, description, category, price, rentingDuration} = req.query;
+        const {videoId} = req.params;
+        const {title, description, category, price, rentingDuration} = req.body;
         
         if(!videoId)
         {
@@ -69,8 +70,8 @@ export async function deleteVideo(req, res)
 {
     try{
         const {videoId} = req.params;
-        await videos.deleteVideo(videoId);
-        res.status(200).send(videoId);
+        const isDeleted = await videos.deleteVideo(videoId);
+        res.status(200).send(isDeleted);
     }
     catch(e)
     {

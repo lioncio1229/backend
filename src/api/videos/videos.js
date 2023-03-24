@@ -22,7 +22,7 @@ export async function getVideo(videoId)
 
 export async function updateVideo(videoId, payload)
 {
-    await getVideoCollection().updateOne(
+    const result = await getVideoCollection().updateOne(
         { _id: new ObjectId(videoId) },
         {
             $set: { ...payload, _id: new ObjectId(videoId) },
@@ -31,7 +31,7 @@ export async function updateVideo(videoId, payload)
             upsert: true
         }
     );
-    return videoId;
+    return result.modifiedCount === 1;
 }
 
 export async function deleteVideo(videoId)

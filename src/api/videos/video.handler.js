@@ -57,8 +57,8 @@ export async function updateVideo(req, res)
         if(price) payload.price = price;
         if(rentingDuration) payload.rentingDuration = rentingDuration;
 
-        await videos.updateVideo(videoId, payload);
-        res.status(200).send(videoId);
+        const isUpdated = await videos.updateVideo(videoId, payload);
+        res.status(200).send(isUpdated);
     }
     catch(e)
     {

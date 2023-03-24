@@ -1,12 +1,14 @@
-import {getBlacklistedTokenCollection} from './databases.js';
+const { getBlacklistedTokenCollection } = require('./databases.js');
 
-export async function blacklistToken(accessToken)
+async function blacklistToken(accessToken)
 {
     await getBlacklistedTokenCollection().insertOne({accessToken});
 };
 
-export async function isTokenBlacklisted(accessToken)
+async function isTokenBlacklisted(accessToken)
 {
     const result = await getBlacklistedTokenCollection().findOne({accessToken});
     return result ? true : false;
 }
+
+module.exports = { blacklistToken, isTokenBlacklisted };

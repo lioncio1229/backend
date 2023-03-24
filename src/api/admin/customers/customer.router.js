@@ -1,7 +1,7 @@
-import express from 'express';
-import { errors } from '../../../config.js';
-import * as customerController from './customer.handler.js';
-import verifyResourceAccess from '../../../middleware/validation.js';
+const express = require('express');
+const { errors } = require('../../../config.js');
+const customerController = require('./customer.handler.js');
+const verifyResourceAccess = require('../../../middleware/validation.js');
 
 const router = express.Router();
 
@@ -10,4 +10,4 @@ router.get('/customers/', verifyResourceAccess(errors.noAccess), customerControl
 router.put('/customers/:username', verifyResourceAccess(errors.noAccess), customerController.updateCustomer);
 router.delete('/customers/:username', verifyResourceAccess(errors.noAccess), customerController.deleteCustomer);
 
-export default {router};
+module.exports = { router };

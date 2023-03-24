@@ -1,7 +1,7 @@
-import * as videos from "../../../services/videos.js";
+const videos = require("../../../services/videos.js");
 
 
-export async function addVideo(req, res)
+async function addVideo(req, res)
 {
     try{
         const videoId = await videos.addVideo(req.body);
@@ -13,7 +13,7 @@ export async function addVideo(req, res)
     }
 }
 
-export async function getVideo(req, res)
+async function getVideo(req, res)
 {
     try{
         const {videoId} = req.params;
@@ -26,7 +26,7 @@ export async function getVideo(req, res)
     }
 }
 
-export async function getVideos(req, res)
+async function getVideos(req, res)
 {
     try{
         const videoList = await videos.getVideos();
@@ -38,7 +38,7 @@ export async function getVideos(req, res)
     }
 }
 
-export async function updateVideo(req, res)
+async function updateVideo(req, res)
 {
     try{
         const {videoId} = req.params;
@@ -66,7 +66,7 @@ export async function updateVideo(req, res)
     }
 }
 
-export async function deleteVideo(req, res)
+async function deleteVideo(req, res)
 {
     try{
         const {videoId} = req.params;
@@ -80,4 +80,4 @@ export async function deleteVideo(req, res)
 }
 
 
-export default {addVideo, getVideo, getVideos, updateVideo, deleteVideo};
+module.exports = { addVideo, getVideo, getVideos, updateVideo, deleteVideo };

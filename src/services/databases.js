@@ -1,6 +1,6 @@
-import { client } from "./connection.js";
+const { client } =  require("./connection.js");
 
-export function getCollectionAtDatabase(collectionName)
+function getCollectionAtDatabase(collectionName)
 {
     try
     {
@@ -13,22 +13,30 @@ export function getCollectionAtDatabase(collectionName)
     }
 }
 
-export function getAdminCollections()
+function getAdminCollections()
 {
     return getCollectionAtDatabase('admins');
 }
 
-export function getBlacklistedTokenCollection()
+function getBlacklistedTokenCollection()
 {
     return getCollectionAtDatabase('blacklisted_tokens');
 }
 
-export function getCustomerCollections()
+function getCustomerCollections()
 {
     return getCollectionAtDatabase('customers');
 }
 
-export function getVideoCollection()
+function getVideoCollection()
 {
     return getCollectionAtDatabase('videos');
+}
+
+module.exports = {
+    getCollectionAtDatabase,
+    getAdminCollections,
+    getBlacklistedTokenCollection,
+    getCustomerCollections,
+    getVideoCollection,
 }

@@ -1,10 +1,10 @@
-import { addAdmin, getAdmins, getAdmin } from '../../services/admin.js';
-import { blacklistToken } from '../../services/accessTokens.js';
-import { generateAccessToken, isAccessTokenValid } from '../../helpers/accessToken.js';
-import { errors } from '../../config.js';
-import CustomError from '../../helpers/customError.js';
+const { addAdmin, getAdmins, getAdmin } = require('../../services/admin.js');
+const { blacklistToken } = require('../../services/accessTokens.js');
+const { generateAccessToken, isAccessTokenValid } = require('../../helpers/accessToken.js');
+const { errors } = require('../../config.js');
+const CustomError = require('../../helpers/customError.js');
 
-export async function signup(req, res)
+async function signup(req, res)
 {
     try{
         const {username, fullname, password} = req.body;
@@ -28,7 +28,7 @@ export async function signup(req, res)
     }
 }
 
-export async function signin(req, res)
+async function signin(req, res)
 {
     try{
 
@@ -65,7 +65,7 @@ export async function signin(req, res)
     }
 }
 
-export async function signout(req, res)
+async function signout(req, res)
 {
     try{
 
@@ -84,4 +84,10 @@ export async function signout(req, res)
     {
         res.status(e.options?.errorCode || 500).send(e.message);
     }
+}
+
+module.exports = {
+    signup,
+    signin,
+    signout,
 }

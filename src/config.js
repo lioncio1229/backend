@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -13,4 +13,4 @@ const errors = {
     noAccess: {message: "You have no access to this resource", errorCode: 403},
 }
 
-export {env, appSettings, errors};
+module.exports = {env, appSettings, errors};

@@ -1,7 +1,7 @@
-import express from 'express';
-import videoHandler from './video.handler.js';
-import verifyResourceAccess from '../../../middleware/validation.js';
-import { errors } from '../../../config.js';
+const express = require('express');
+const videoHandler = require('./video.handler.js');
+const verifyResourceAccess = require('../../../middleware/validation.js');
+const { errors } = require('../../../config.js');
 
 const router = express.Router();
 
@@ -11,4 +11,4 @@ router.get('/videos/', verifyResourceAccess(errors.noAccess), videoHandler.getVi
 router.put('/videos/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.updateVideo);
 router.delete('/videos/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.deleteVideo);
 
-export default {router};
+module.exports = { router };

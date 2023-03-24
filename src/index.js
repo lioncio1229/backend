@@ -1,9 +1,9 @@
-import express from 'express';
-import cors from 'cors';
-import sessions from 'express-session';
-import { env } from './config.js';
-import connect from './services/connection.js';
-import routes from './routes.js';
+const express = require('express');
+const cors = require('cors');
+const sessions = require('express-session');
+const { env } = require('./config.js');
+const { connect } = require('./services/connection.js');
+const routes = require('./routes.js');
 
 const app = express();
 const port = 3000;
@@ -43,4 +43,4 @@ app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 
-export default app;
+module.exports = app;

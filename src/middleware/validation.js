@@ -1,6 +1,6 @@
-import { isTokenBlacklisted } from '../services/accessTokens.js';
-import { verifyAccesstoken } from '../helpers/accessToken.js';
-import CustomError from '../helpers/customError.js';
+const { isTokenBlacklisted } = require('../services/accessTokens.js');
+const { verifyAccesstoken } = require('../helpers/accessToken.js');
+const CustomError = require('../helpers/customError.js');
 
 function verifyResourceAccess({message='Error', errorCode=500})
 {
@@ -22,4 +22,4 @@ function verifyResourceAccess({message='Error', errorCode=500})
     }
 }
 
-export default verifyResourceAccess;
+module.exports = verifyResourceAccess;

@@ -1,6 +1,6 @@
-import { getAdminCollections } from "./databases.js";
+const { getAdminCollections } = require("./databases.js");
 
-export async function getAdmins()
+async function getAdmins()
 {
     const cursor = getAdminCollections().find();
     const admins = [];
@@ -8,13 +8,19 @@ export async function getAdmins()
     return admins;
 }
 
-export async function getAdmin(username)
+async function getAdmin(username)
 {
     return await getAdminCollections().findOne({username});
 }
 
-export async function addAdmin(admin)
+async function addAdmin(admin)
 {
     await getAdminCollections().insertOne(admin);
     return admin;
+}
+
+module.exports = {
+    getAdmin,
+    getAdmins,
+    addAdmin,
 }

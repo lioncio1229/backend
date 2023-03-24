@@ -1,8 +1,8 @@
-import oauthRouter from './api/auth/oauth.router.js';
-import customerRouter from './api/admin/customers/customer.router.js';
-import videoRouter from './api/admin/videos/video.router.js';
+const oauthRouter = require('./api/auth/oauth.router.js');
+const customerRouter = require('./api/admin/customers/customer.router.js');
+const videoRouter = require('./api/admin/videos/video.router.js');
 
-export default function (app)
+module.exports = function (app)
 {
     app.get('/', (req, res) => {
         res.send('Welcome to Bogsy Video Store!');

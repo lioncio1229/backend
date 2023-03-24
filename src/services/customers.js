@@ -1,7 +1,7 @@
-import { getCustomerCollections } from "./databases.js";
+const { getCustomerCollections } = require("./databases.js");
 
 
-export async function addCustomer(payload)
+async function addCustomer(payload)
 {
     await getCustomerCollections().insertOne({
         username: payload.username,
@@ -9,7 +9,7 @@ export async function addCustomer(payload)
     });
 }
 
-export async function getCustomers()
+async function getCustomers()
 {
     const cursor = getCustomerCollections().find();
     const customers = [];
@@ -17,18 +17,18 @@ export async function getCustomers()
     return customers;
 }
 
-export async function isCustomerExist(username)
+async function isCustomerExist(username)
 {
     const customers = await getCustomers();
     return customers.find(c => c.username === username) ? true : false;
 }
 
-export async function getCustomer(username)
+async function getCustomer(username)
 {
     return await getCustomerCollections().findOne({username});
 }
 
-export async function updateCustomer(username, payload)
+async function updateCustomer(username, payload)
 {
     await getCustomerCollections().updateOne(
       { username },
@@ -44,8 +44,16 @@ export async function updateCustomer(username, payload)
     );
 }
 
-export async function deleteCustomer(username)
+async function deleteCustomer(username)
 {
     const result = await getCustomerCollections().deleteOne({username});
     return result.deletedCount === 1;
+}
+
+module.exports = {
+  addCustomer,
+  getCustomer,
+  getCustomers,
+  isCustomerExist,
+  updateCustomer,
 }

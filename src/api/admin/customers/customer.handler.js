@@ -1,6 +1,6 @@
-import * as customerManagement from '../../../services/customers.js';
+const customerManagement = require('../../../services/customers.js');
 
-export async function addCustomer(req, res)
+async function addCustomer(req, res)
 {
     try{
         const {username, password} = req.body;
@@ -24,7 +24,7 @@ export async function addCustomer(req, res)
     }
 }
 
-export async function getCustomers(req, res)
+async function getCustomers(req, res)
 {
     try{
         const customers = await customerManagement.getCustomers();
@@ -37,7 +37,7 @@ export async function getCustomers(req, res)
     }
 }
 
-export async function updateCustomer(req, res)
+async function updateCustomer(req, res)
 {
     try{
         const {username, password} = req.body;
@@ -50,7 +50,7 @@ export async function updateCustomer(req, res)
     }
 }
 
-export async function deleteCustomer(req, res)
+async function deleteCustomer(req, res)
 {
     try{
         const {username} = req.params;
@@ -61,4 +61,11 @@ export async function deleteCustomer(req, res)
     {
         res.status(500).send(e.message);
     }
+}
+
+module.exports = {
+    addCustomer,
+    getCustomers,
+    updateCustomer,
+    deleteCustomer
 }

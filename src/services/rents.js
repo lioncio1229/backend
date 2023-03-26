@@ -9,6 +9,11 @@ async function getRents(username)
     return arr;
 }
 
+async function getRent(username, videoId)
+{
+  return await getRentCollection().findOne({username, videoId});
+}
+
 async function addRent(username, videoId)
 {
   const result = await getRentCollection().updateOne(
@@ -28,6 +33,7 @@ async function removeRent(rentId)
 }
 
 module.exports = {
+    getRent,
     getRents,
     addRent,
     removeRent,

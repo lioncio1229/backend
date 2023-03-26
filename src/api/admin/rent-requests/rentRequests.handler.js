@@ -12,6 +12,7 @@ async function acceptRentRequest(req, res)
         }
 
         const result = await rents.addRent(req.username, rent.videoId);
+        await rentRequests.deleteRentRequest(rentRequestId);
         res.status(200).send(result);
     }
     catch(e)

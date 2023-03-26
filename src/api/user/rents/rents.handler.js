@@ -7,6 +7,13 @@ async function addRent(req, res)
         const { videoId } = req.body;
         if(!videoId) throw new Error('Required Video Id');
 
+        const rent = await rents.getRent(req.username, videoId);
+        if(rent)
+        {
+            res.status(200).send('Video is currently renting');
+            return;
+        }
+
         const result = await rentRequests.addRentRequest(req.username, videoId);
         res.status(200).send(result);
     }

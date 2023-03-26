@@ -1,6 +1,5 @@
 const videos = require("../../../services/videos.js");
 const rents = require("../../../services/rents.js");
-const rentRequests = require('../../../services/rentRequests.js');
 
 async function getVideos(req, res)
 {
@@ -16,23 +15,7 @@ async function getVideos(req, res)
     }
 }
 
-async function requestRent(req, res)
-{
-    try{
-        const { videoId } = req.params;
-        if(!videoId) throw new Error('Required Video Id');
-
-        const result = await rentRequests.addRentRequest(req.username, videoId);
-        res.status(200).send(result);
-    }
-    catch(e)
-    {
-        res.status(500).send(e.message);
-    }
-}
-
 module.exports = {
     getVideos,
-    requestRent,
 }
 

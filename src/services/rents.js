@@ -1,41 +1,30 @@
 const { getRentCollection } = require("./databases");
+const { ObjectId } = require("mongodb");
 
 async function getRents(username)
 {
-    const result = await getRentCollection().findOne({ username });
-    return result?.list || [];
+    const cursor = getRentCollection().find({ username });
+    const arr = [];
+    await cursor.forEach(item => arr.push(item));
+    return arr;
 }
 
 async function addRent(username, videoId)
 {
-    const result = await getRentCollection().updateOne(
-        { username },
-        { $push: { list: videoId } },
-        { upsert: true }
-    );
-    return result.upsertedCount === 1 || result.modifiedCount === 1;
+  const result = await getRentCollection().updateOne(
+      { username, videoId },
+      {
+          $setOnInsert : { username, videoId, expirationDate: new Date()}
+      },
+      {upsert: true}
+  );
+  return result.upsertedId;
 }
 
-async function removeRent(username, videoId)
+async function removeRent(rentId)
 {
-    const result = await getRentCollection().updateOne(
-        { username },
-        { $pull: { list: videoId } },
-        { upsert: true }
-    );
-
-    //remove entire user object if there have no rent list
-    if(result.modifiedCount === 1)
-    {
-        const rentList = await getRents(username);
-        if(rentList.length === 0)
-        {
-            await getRentCollection().deleteOne({username});
-        }
-        return true;
-    }
-
-    return false;
+    const result = await getRentCollection().deleteOne({_id: new ObjectId(rentId)});
+    return result.deletedCount === 1;
 }
 
 module.exports = {

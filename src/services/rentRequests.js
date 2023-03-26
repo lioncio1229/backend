@@ -13,6 +13,11 @@ async function addRentRequest(username, videoId)
     return result.upsertedId;
 }
 
+async function getRentRequest(rentRequestId)
+{
+    return await getRentRequestCollection().findOne({_id: new ObjectId(rentRequestId)});
+}
+
 async function getAllRentRequest()
 {
     const cursor = getRentRequestCollection().find();
@@ -30,6 +35,7 @@ async function deleteRentRequest(rentRequestId)
 
 module.exports = {
     addRentRequest,
+    getRentRequest,
     getAllRentRequest,
     deleteRentRequest,
 }

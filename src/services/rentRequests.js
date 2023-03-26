@@ -18,9 +18,9 @@ async function getRentRequest(rentRequestId)
     return await getRentRequestCollection().findOne({_id: new ObjectId(rentRequestId)});
 }
 
-async function getAllRentRequest()
+async function getAllRentRequest(username=null)
 {
-    const cursor = getRentRequestCollection().find();
+    const cursor = getRentRequestCollection().find(username ? { username } : {});
     const arr = [];
     await cursor.forEach(item => arr.push(item));
     return arr;

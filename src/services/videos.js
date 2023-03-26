@@ -40,27 +40,27 @@ async function deleteVideo(videoId)
     return result.deletedCount === 1;
 }
 
-function parseVideos(videos, rents)
+function parseVideos(videos, rents, rentRequests)
 {
     return videos.map(video => {
-        let changes = {
+        let rentChanges = {
             isRenting: false
-        }
-        for(let i = 0; i < rents.length; i++)
+        }, isRequestingForRent = false;
+        const videoId = video._id.toString();
+
+        const rent = rents.find(rent => rent.videoId === videoId);
+        if(rent)
         {
-            const rentId = rents[i];
-            if(rentId === video._id.toString())
-            {
-                changes = {
-                    isRenting: true
-                }
-                break;
-            }
+            rentChanges.isRenting = true;
         }
+
+        const rentRequest = rentRequests.find(rentRequest => rentRequest.videoId === videoId);
+        if(rentRequest) isRequestingForRent = true;
 
         return {
             ...video,
-            ...changes
+            ...rentChanges,
+            isRequestingForRent,
         }
     });
 }

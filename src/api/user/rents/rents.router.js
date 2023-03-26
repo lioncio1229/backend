@@ -6,6 +6,6 @@ const rentsHandler = require('./rents.handler.js');
 const router = express.Router();
 
 router.get('/rents', verifyResourceAccess(errors.noAccess), rentsHandler.getRents);
-router.post('/rents', verifyResourceAccess(errors.noAccess), rentsHandler.addRent);
+router.post('/rents', verifyResourceAccess(errors.noAccess), rentsHandler.requestRent);
 
 module.exports = { router };

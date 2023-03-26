@@ -1,5 +1,6 @@
 const { getVideos, parseVideos } = require("../../../services/videos.js");
 const rents = require("../../../services/rents.js");
+const rentRequests = require('../../../services/rentRequests.js');
 
 async function getRents(req, res)
 {
@@ -15,15 +16,13 @@ async function getRents(req, res)
     }
 }
 
-async function addRent(req, res)
+async function requestRent(req, res)
 {
     try{
-        const {videoId} = req.body;
-        if(!videoId)
-        {
-            throw new Error('Required Video Id');
-        }
-        const result = await rents.addRent(req.username, videoId);
+        const { videoId } = req.body;
+        if(!videoId) throw new Error('Required Video Id');
+
+        const result = await rentRequests.addRentRequest(req.username, videoId);
         res.status(200).send(result);
     }
     catch(e)
@@ -34,6 +33,6 @@ async function addRent(req, res)
 
 module.exports = {
     getRents,
-    addRent,
+    requestRent,
 }
 

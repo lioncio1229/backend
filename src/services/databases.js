@@ -33,6 +33,11 @@ function getVideoCollection()
     return getCollectionAtDatabase('videos');
 }
 
+function getRentRequestCollection()
+{
+    return getCollectionAtDatabase('rentRequests');
+}
+
 function getRentCollection()
 {
     return getCollectionAtDatabase('rents');
@@ -44,5 +49,6 @@ module.exports = {
     getBlacklistedTokenCollection,
     getCustomerCollections,
     getVideoCollection,
+    getRentRequestCollection,
     getRentCollection,
 }

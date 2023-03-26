@@ -1,7 +1,7 @@
 const oauthRouter = require('./api/auth/oauth.router.js');
 const customerRouter = require('./api/admin/customers/customer.router.js');
-const videoRouter = require('./api/admin/videos/video.router.js');
-const userRentsRouter = require('./api/user/rents/rents.router.js');
+const adminVideoRouter = require('./api/admin/videos/video.router.js');
+const userVideosRouter = require('./api/user/videos/videos.router.js');
 const rentRequestsRouter = require('./api/admin/rent-requests/rentRequests.router.js');
 
 module.exports = function (app)
@@ -12,8 +12,8 @@ module.exports = function (app)
     
     app.use('/api/oauth', oauthRouter.router);
     app.use('/api/admin', customerRouter.router);
-    app.use('/api/admin', videoRouter.router);
-    app.use('/api/user', userRentsRouter.router);
+    app.use('/api/admin', adminVideoRouter.router);
+    app.use('/api/user', userVideosRouter.router);
     app.use('/api/admin', rentRequestsRouter.router);
 }
 

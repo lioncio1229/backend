@@ -1,13 +1,13 @@
-const { getVideos, parseVideos } = require("../../../services/videos.js");
+const videos = require("../../../services/videos.js");
 const rents = require("../../../services/rents.js");
 const rentRequests = require('../../../services/rentRequests.js');
 
-async function getRents(req, res)
+async function getVideos(req, res)
 {
     try{
-        const videos = await getVideos();
+        const videoList = await videos.getVideos();
         const rentList = await rents.getRents(req.username);
-        const parsedVideos = parseVideos(videos, rentList);
+        const parsedVideos = videos.parseVideos(videoList, rentList);
         res.status(200).send(parsedVideos);
     }
     catch(e)
@@ -19,7 +19,7 @@ async function getRents(req, res)
 async function requestRent(req, res)
 {
     try{
-        const { videoId } = req.body;
+        const { videoId } = req.params;
         if(!videoId) throw new Error('Required Video Id');
 
         const result = await rentRequests.addRentRequest(req.username, videoId);
@@ -32,7 +32,7 @@ async function requestRent(req, res)
 }
 
 module.exports = {
-    getRents,
+    getVideos,
     requestRent,
 }
 

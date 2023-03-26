@@ -24,7 +24,7 @@ async function getAllRentRequest()
 async function deleteRentRequest(rentRequestId)
 {
     const result = await getRentRequestCollection().deleteOne({_id: new ObjectId(rentRequestId)});
-    result.deletedCount === 1;
+    return result.deletedCount === 1;
 }
 
 

@@ -44,7 +44,8 @@ function parseVideos(videos, rents, rentRequests)
 {
     return videos.map(video => {
         let rentChanges = {
-            isRenting: false
+            isRenting: false,
+            dueDate: null,
         }, isRequestingForRent = false;
         const videoId = video._id.toString();
 
@@ -52,6 +53,7 @@ function parseVideos(videos, rents, rentRequests)
         if(rent)
         {
             rentChanges.isRenting = true;
+            rentChanges.dueDate = rent.dueDate
         }
 
         const rentRequest = rentRequests.find(rentRequest => rentRequest.videoId === videoId);

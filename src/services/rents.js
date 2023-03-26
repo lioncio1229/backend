@@ -1,5 +1,6 @@
 const { getRentCollection } = require("./databases");
 const { ObjectId } = require("mongodb");
+const { addDaytoCurrentTime } = require("../helpers/dateAndTime.js");
 
 async function getRents(username)
 {
@@ -14,12 +15,12 @@ async function getRent(username, videoId)
   return await getRentCollection().findOne({username, videoId});
 }
 
-async function addRent(username, videoId)
+async function addRent(username, videoId, rentDurationInDays=3)
 {
   const result = await getRentCollection().updateOne(
       { username, videoId },
       {
-          $setOnInsert : { username, videoId, expirationDate: new Date()}
+          $setOnInsert : { username, videoId, dueDate: addDaytoCurrentTime(rentDurationInDays)}
       },
       {upsert: true}
   );

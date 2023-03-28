@@ -1,4 +1,4 @@
-const oauthRouter = require('./api/auth/oauth.router.js');
+const oauthRouter = require('./api/auth/auth.router.js');
 const customerRouter = require('./api/admin/customers/customer.router.js');
 const adminVideoRouter = require('./api/admin/videos/video.router.js');
 const userVideosRouter = require('./api/user/videos/videos.router.js');
@@ -12,7 +12,7 @@ module.exports = function (app)
         res.send('Welcome to Bogsy Video Store!');
     });
     
-    app.use('/api/oauth', oauthRouter.router);
+    app.use('/api/auth', oauthRouter.router);
     app.use('/api/admin', customerRouter.router);
     app.use('/api/admin', adminVideoRouter.router);
     app.use('/api/admin', rentRequestsRouter.router);

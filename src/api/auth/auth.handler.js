@@ -1,4 +1,5 @@
 const { addAdmin, getAdmins, getAdmin } = require('../../services/admin.js');
+const { getCustomer } = require('../../services/customers.js');
 const { blacklistToken } = require('../../services/accessTokens.js');
 const { generateAccessToken, isAccessTokenValid } = require('../../helpers/accessToken.js');
 const { errors } = require('../../config.js');
@@ -38,16 +39,27 @@ async function signin(req, res)
             throw new CustomError(message, errorCode);
         }
 
+        const {role} = req.query;
+
         const {username, password} = req.body;
 
         let token;
-        const admins = await getAdmins();
-        admins.forEach(admin => {
-            if(admin.username === username && admin.password === password)
+
+        if(role === 'admin')
+        {
+            const admin = await getAdmin(username);
+            if(admin && admin.password === password)
             {
                 token = generateAccessToken(admin);
             }
-        });
+        }
+        else{
+            const user = await getCustomer(username);
+            if(user && user.password === password)
+            {
+                token = generateAccessToken(user);
+            }
+        }
         
         if(token)
         {

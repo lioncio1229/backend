@@ -30,14 +30,14 @@ test('#1 - Testing getRecords', () => {
             title: 'Video 1',
             quantity: 23,
             outCounts: 0,
-            renter: []
+            renters: []
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Video 2',
             quantity: 15,
             outCounts: 1,
-            renter: [
+            renters: [
                 {
                     username: 'camilsmary',
                     dueDate: '3/30/2023'
@@ -87,7 +87,7 @@ test('#2 - Testing getRecords', () => {
             title: 'Video 1',
             quantity: 23,
             outCounts: 1,
-            renter: [{
+            renters: [{
                 username: 'maryjane and Camilo',
                 dueDate: '3/-1/2023'
             }]
@@ -97,7 +97,7 @@ test('#2 - Testing getRecords', () => {
             title: 'Video 2',
             quantity: 15,
             outCounts: 2,
-            renter: [
+            renters: [
                 {
                     username: 'camilsmary',
                     dueDate: '3/30/2023'
@@ -136,14 +136,14 @@ test('#3 - Testing getRecords', () => {
             title: 'Video 1',
             quantity: 23,
             outCounts: 0,
-            renter: []
+            renters: []
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Video 2',
             quantity: 15,
             outCounts: 0,
-            renter: []
+            renters: []
         }
     ];
 

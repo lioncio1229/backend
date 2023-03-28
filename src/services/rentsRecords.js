@@ -25,11 +25,15 @@ exports.getRecordsByCustomers = (customers, rents) => {
 
     return customers.map(customer => {
         const username = customer.username;
-        const rentList = rents.filter(rent => rent.username === username);
-        
+        const rentList = rents.filter(rent => rent.username === username)
+        .map(rent => {
+            delete rent.username;
+            return rent;
+        });
+
         return{
             username,
-            rentList,
+            rents: rentList,
         }
     });
 }

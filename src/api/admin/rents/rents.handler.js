@@ -1,6 +1,7 @@
 const rents = require('../../../services/rents.js');
 const videos = require('../../../services/videos.js');
 const rentsRecords = require('../../../services/rentsRecords.js');
+const admin = require('../../../services/admin.js');
 const customers = require('../../../services/customers.js');
 
 async function getRents(req, res)
@@ -13,6 +14,11 @@ async function getRents(req, res)
         {
             const videList = await videos.getVideos();
             records = rentsRecords.getRecordsByVideo(videList, records);
+        }
+        else if(style === 'byAdmin')
+        {
+            const adminList = await admin.getAdmins();
+            records = rentsRecords.getRecordsByCustomers(adminList, records);
         }
         else if(style === 'byCustomer')
         {

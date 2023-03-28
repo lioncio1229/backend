@@ -5,7 +5,10 @@ exports.getRecordsByVideo = (videos, rents) =>
     return videos.map(video => {
         const videoId = video._id.toString();
         const renters = rents.filter(rent => rent.videoId === videoId)
-        .map(rent => ({ username: rent.username, dueDate: rent.dueDate }));
+        .map(rent => {
+            delete rent.videoId;
+            return rent;
+        });
 
         return {
             ...video,

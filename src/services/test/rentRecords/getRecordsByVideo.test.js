@@ -46,7 +46,7 @@ test('#1 - Testing getRecords', () => {
         }
     ];
 
-    expect(getRecords.getRecords(videos, rents)).toEqual(expected);
+    expect(getRecords.getRecordsByVideo(videos, rents)).toEqual(expected);
 });
 
 test('#2 - Testing getRecords', () => {
@@ -110,7 +110,7 @@ test('#2 - Testing getRecords', () => {
         }
     ];
 
-    expect(getRecords.getRecords(videos, rents)).toEqual(expected);
+    expect(getRecords.getRecordsByVideo(videos, rents)).toEqual(expected);
 });
 
 
@@ -147,5 +147,5 @@ test('#3 - Testing getRecords', () => {
         }
     ];
 
-    expect(getRecords.getRecords(videos, rents)).toEqual(expected);
+    expect(getRecords.getRecordsByVideo(videos, rents)).toEqual(expected);
 });

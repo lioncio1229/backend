@@ -1,10 +1,10 @@
 
 
-exports.getRecords = (videos, rents) =>
+exports.getRecordsByVideo = (videos, rents) =>
 {
     return videos.map(video => {
         const videoId = video._id.toString();
-        let renters = [];
+        const renters = [];
 
         rents.forEach(rent => {
             if(rent.videoId === videoId)
@@ -18,5 +18,18 @@ exports.getRecords = (videos, rents) =>
             outCounts: renters.length,
             renters,
         };
+    });
+}
+
+exports.getRecordsByCustomers = (customers, rents) => {
+
+    return customers.map(customer => {
+        const username = customer.username;
+        const rentList = rents.filter(rent => rent.username === username);
+        
+        return{
+            username,
+            rentList,
+        }
     });
 }

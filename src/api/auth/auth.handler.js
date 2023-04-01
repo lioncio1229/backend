@@ -38,13 +38,11 @@ async function signin(req, res)
             throw new CustomError(message, errorCode);
         }
 
-        const {role} = req.query;
-
         const {username, password} = req.body;
 
-        let token;
-
         const user = await getUser(username);
+        
+        let token;
         if(user && user.password === password)
         {
             token = generateAccessToken(user);

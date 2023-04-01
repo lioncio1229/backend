@@ -15,11 +15,6 @@ async function getRents(req, res)
             const videList = await videos.getVideos();
             records = rentsRecords.getRecordsByVideo(videList, records);
         }
-        else if(style === 'byAdmin')
-        {
-            const adminList = await admin.getAdmins();
-            records = rentsRecords.getRecordsByCustomers(adminList, records);
-        }
         else if(style === 'byCustomer')
         {
             const customerList = await users.getUsers();

@@ -10,9 +10,9 @@ async function signup(req, res)
         const {username, fullname, password} = req.body;
         const payload = {username, fullname, password};
         const token = generateAccessToken(payload);
-        const admin = await getUser(username);
+        const user = await getUser(username);
 
-        if(admin?.username === username)
+        if(user?.username === username)
         {
             res.status(403).send('Username already exist');
             return;

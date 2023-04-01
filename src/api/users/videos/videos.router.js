@@ -5,6 +5,6 @@ const videosHandler = require('./videos.handler.js');
 
 const router = express.Router();
 
-router.get('/videos', verifyResourceAccess(errors.noAccess), videosHandler.getVideos);
+router.get('/', verifyResourceAccess(errors.noAccess), videosHandler.getVideos);
 
 module.exports = { router };

@@ -14,10 +14,10 @@ module.exports = function (app)
     
     app.use('/api/auth', oauthRouter.router);
     app.use('/api/users', usersRouter.router);
-    app.use('/api', videoRouter.router);
+    app.use('/api/videos', videoRouter.router);
     app.use('/api/rent-requests', rentRequestsRouter.router);
-    app.use('/api/users', userVideosRouter.router);
-    app.use('/api/users', rentsUser.router);
+    app.use('/api/users/videos', userVideosRouter.router);
+    app.use('/api/users/rents', rentsUser.router);
     app.use('/api/rents', rents.router);
 }
 

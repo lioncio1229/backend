@@ -5,10 +5,10 @@ const { errors } = require('../../config.js');
 
 const router = express.Router();
 
-router.post('/videos/', verifyResourceAccess(errors.noAccess), videoHandler.addVideo);
-router.get('/videos/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.getVideo);
-router.get('/videos/', verifyResourceAccess(errors.noAccess), videoHandler.getVideos);
-router.put('/videos/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.updateVideo);
-router.delete('/videos/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.deleteVideo);
+router.post('/', verifyResourceAccess(errors.noAccess), videoHandler.addVideo);
+router.get('/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.getVideo);
+router.get('/', verifyResourceAccess(errors.noAccess), videoHandler.getVideos);
+router.put('/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.updateVideo);
+router.delete('/:videoId', verifyResourceAccess(errors.noAccess), videoHandler.deleteVideo);
 
 module.exports = { router };

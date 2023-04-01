@@ -1,5 +1,4 @@
-const { addAdmin, getAdmins, getAdmin } = require('../../services/admin.js');
-const { getUser } = require('../../services/users.js');
+const { getUser, addUser } = require('../../services/users.js');
 const { blacklistToken } = require('../../services/accessTokens.js');
 const { generateAccessToken, isAccessTokenValid } = require('../../helpers/accessToken.js');
 const { errors } = require('../../config.js');
@@ -11,7 +10,7 @@ async function signup(req, res)
         const {username, fullname, password} = req.body;
         const payload = {username, fullname, password};
         const token = generateAccessToken(payload);
-        const admin = await getAdmin(username);
+        const admin = await getUser(username);
 
         if(admin?.username === username)
         {
@@ -19,7 +18,7 @@ async function signup(req, res)
             return;
         }
 
-        await addAdmin({username, fullname, password});
+        await addUser({username, fullname, password});
         req.session.accessToken = token;
         res.status(200).send({});
     }
@@ -45,20 +44,10 @@ async function signin(req, res)
 
         let token;
 
-        if(role === 'admin')
+        const user = await getUser(username);
+        if(user && user.password === password)
         {
-            const admin = await getAdmin(username);
-            if(admin && admin.password === password)
-            {
-                token = generateAccessToken(admin);
-            }
-        }
-        else{
-            const user = await getUser(username);
-            if(user && user.password === password)
-            {
-                token = generateAccessToken(user);
-            }
+            token = generateAccessToken(user);
         }
         
         if(token)

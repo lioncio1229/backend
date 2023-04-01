@@ -25,7 +25,7 @@ function getBlacklistedTokenCollection()
 
 function getUserCollections()
 {
-    return getCollectionAtDatabase('customers');
+    return getCollectionAtDatabase('users');
 }
 
 function getVideoCollection()

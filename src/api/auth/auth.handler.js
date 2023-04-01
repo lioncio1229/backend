@@ -18,7 +18,12 @@ async function signup(req, res)
             return;
         }
 
-        await addUser({username, fullname, password});
+        const permissions = [
+            {name: 'videos', actions: ['view']},
+            {name: 'request_rents', actions: ['add']},
+        ];
+
+        await addUser({username, fullname, password, permissions});
         req.session.accessToken = token;
         res.status(200).send({});
     }

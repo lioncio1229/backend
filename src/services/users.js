@@ -3,10 +3,7 @@ const { getUserCollections } = require("./databases.js");
 
 async function addUser(payload)
 {
-    await getUserCollections().insertOne({
-        username: payload.username,
-        password: payload.password,
-    });
+    await getUserCollections().insertOne({...payload});
 }
 
 async function getUsers()

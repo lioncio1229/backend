@@ -1,7 +1,7 @@
 const express = require('express');
 const videoHandler = require('./video.handler.js');
-const verifyResourceAccess = require('../../../middleware/validation.js');
-const { errors } = require('../../../config.js');
+const verifyResourceAccess = require('../../middleware/validation.js');
+const { errors } = require('../../config.js');
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-const videos = require("../../../services/videos.js");
+const videos = require("../../services/videos.js");
 
 
 async function addVideo(req, res)

@@ -1,5 +1,5 @@
 const { addAdmin, getAdmins, getAdmin } = require('../../services/admin.js');
-const { getCustomer } = require('../../services/customers.js');
+const { getUser } = require('../../services/users.js');
 const { blacklistToken } = require('../../services/accessTokens.js');
 const { generateAccessToken, isAccessTokenValid } = require('../../helpers/accessToken.js');
 const { errors } = require('../../config.js');
@@ -54,7 +54,7 @@ async function signin(req, res)
             }
         }
         else{
-            const user = await getCustomer(username);
+            const user = await getUser(username);
             if(user && user.password === password)
             {
                 token = generateAccessToken(user);

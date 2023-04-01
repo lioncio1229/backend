@@ -23,7 +23,7 @@ function getBlacklistedTokenCollection()
     return getCollectionAtDatabase('blacklisted_tokens');
 }
 
-function getCustomerCollections()
+function getUserCollections()
 {
     return getCollectionAtDatabase('customers');
 }
@@ -47,7 +47,7 @@ module.exports = {
     getCollectionAtDatabase,
     getAdminCollections,
     getBlacklistedTokenCollection,
-    getCustomerCollections,
+    getUserCollections,
     getVideoCollection,
     getRentRequestCollection,
     getRentCollection,

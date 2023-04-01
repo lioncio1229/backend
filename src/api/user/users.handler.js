@@ -1,6 +1,6 @@
-const customerManagement = require('../../../services/customers.js');
+const users = require('../../services/users.js');
 
-async function addCustomer(req, res)
+async function addUser(req, res)
 {
     try{
         const {username, password} = req.body;
@@ -9,13 +9,13 @@ async function addCustomer(req, res)
             throw new Error('Username and Password required');
         }
 
-        const isExist = await customerManagement.isCustomerExist(username);
+        const isExist = await users.isUserExist(username);
         if(isExist)
         {
             res.status(200).send('Customer Exist');
             return;
         }
-        await customerManagement.addCustomer({username, password});
+        await users.addUser({username, password});
         res.status(200).send(username);
     }
     catch(e)
@@ -24,10 +24,10 @@ async function addCustomer(req, res)
     }
 }
 
-async function getCustomers(req, res)
+async function getUsers(req, res)
 {
     try{
-        const customers = await customerManagement.getCustomers();
+        const customers = await users.getUsers();
         const parsedCustomers = customers.map(customer => customer.username);
         res.status(200).send(parsedCustomers);
     }
@@ -37,11 +37,11 @@ async function getCustomers(req, res)
     }
 }
 
-async function updateCustomer(req, res)
+async function updateUser(req, res)
 {
     try{
         const {username, password} = req.body;
-        await customerManagement.updateCustomer(req.params.username, {username, password});
+        await users.updateUser(req.params.username, {username, password});
         res.status(200).send(username);
     }
     catch(e)
@@ -50,11 +50,11 @@ async function updateCustomer(req, res)
     }
 }
 
-async function deleteCustomer(req, res)
+async function deleteUser(req, res)
 {
     try{
         const {username} = req.params;
-        await customerManagement.deleteCustomer(username);
+        await users.deleteUser(username);
         res.status(200).send(username);
     }
     catch(e)
@@ -64,8 +64,8 @@ async function deleteCustomer(req, res)
 }
 
 module.exports = {
-    addCustomer,
-    getCustomers,
-    updateCustomer,
-    deleteCustomer
+    addUser,
+    getUsers,
+    updateUser,
+    deleteUser
 }

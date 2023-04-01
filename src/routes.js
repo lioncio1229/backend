@@ -4,7 +4,7 @@ const videoRouter = require('./api/videos/video.router.js');
 const userVideosRouter = require('./api/user/videos/videos.router.js');
 const rentRequestsRouter = require('./api/rent-requests/rentRequests.router.js');
 const rentsUser = require('./api/user/rents/rents.router.js');
-const rentsAdmin = require('./api/admin/rents/rents.router.js');
+const rents = require('./api/rents/rents.router.js');
 
 module.exports = function (app)
 {
@@ -18,7 +18,7 @@ module.exports = function (app)
     app.use('/api/rent-requests', rentRequestsRouter.router);
     app.use('/api/user', userVideosRouter.router);
     app.use('/api/user', rentsUser.router);
-    app.use('/api/admin', rentsAdmin.router);
+    app.use('/api/rents', rents.router);
 }
 
 

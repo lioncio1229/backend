@@ -10,11 +10,15 @@ async function addRent(req, res)
         const rent = await rents.getRentWithUsernameAndVideoId(req.username, videoId);
         if(rent)
         {
-            res.status(200).send('Video is currently renting');
+            res.status(409).send('Video is currently renting');
             return;
         }
-
         const result = await rentRequests.addRentRequest(req.username, videoId);
+        if(!result)
+        {
+            res.status(409).send('Video is currently in renting requests');
+            return;
+        }
         res.status(200).send(result);
     }
     catch(e)

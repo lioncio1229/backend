@@ -1,5 +1,5 @@
-const rentRequests = require('../../../services/rentRequests.js');
-const rents = require('../../../services/rents.js');
+const rentRequests = require('../../services/rentRequests.js');
+const rents = require('../../services/rents.js');
 
 async function acceptRentRequest(req, res)
 {

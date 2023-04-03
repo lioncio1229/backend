@@ -46,9 +46,9 @@ async function deletePermission(req, res)
 async function addAction(req, res)
 {
     try{
-        const { name, actionName } = req.params;
+        const { actionName } = req.query;
         if(!actionName) throw new Error('actionName field required');
-        const result = await permissions.addAction(req.username, name, actionName);
+        const result = await permissions.addAction(req.username, req.params.name, actionName);
         res.status(200).send(result);        
     }
     catch(e)

@@ -19,7 +19,7 @@ router.get('/permissions/:name', verifyResourceAccess(), permissionsHandler.getP
 router.delete('/permissions/:name', verifyResourceAccess(), permissionsHandler.deletePermission);
 
 router.get('/permissions/:name/actions', verifyResourceAccess(), permissionsHandler.getActions);
-router.post('/permissions/:name/actions/:actionName', verifyResourceAccess(), permissionsHandler.addAction);
+router.post('/permissions/:name/actions', verifyResourceAccess(), permissionsHandler.addAction);
 router.delete('/permissions/:name/actions/:actionName', verifyResourceAccess(), permissionsHandler.deleteAction);
 
 router.get('/videos', verifyResourceAccess(), videosHandler.getVideos);

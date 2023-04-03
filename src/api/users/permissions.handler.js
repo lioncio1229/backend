@@ -1,4 +1,4 @@
-const permissions = require('../../../services/permissions.js');
+const permissions = require('../../services/permissions.js');
 
 
 async function getPermissions(req, res)

@@ -1,6 +1,6 @@
-const videos = require("../../../services/videos.js");
-const rents = require("../../../services/rents.js");
-const rentRequests = require('../../../services/rentRequests.js');
+const videos = require("../../services/videos.js");
+const rents = require("../../services/rents.js");
+const rentRequests = require('../../services/rentRequests.js');
 
 async function getVideos(req, res)
 {

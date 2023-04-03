@@ -49,7 +49,21 @@ async function getRents(req, res)
     }
 }
 
+async function deleteRent(req, res)
+{
+    try{
+        const { rentId } = req.params;
+        const result = await rents.deleteRent(rentId);
+        res.status(200).send(result);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
 module.exports = {
     addRent,
     getRents,
+    deleteRent,
 }

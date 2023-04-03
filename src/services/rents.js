@@ -40,14 +40,15 @@ async function addRent(payload)
     return result.upsertedId;
 }
 
-async function removeRent(rentId)
+async function deleteRent(rentId)
 {
     const rent = await getRent(rentId);
     const video = await getVideo(rent.videoId);
     
     const result = await getRentCollection().deleteOne({_id: new ObjectId(rentId)});
-    await updateVideo(video.videoId, {quantity: video.quantity + 1});
-    return result.deletedCount === 1;
+
+    await updateVideo(video._id, {quantity: video.quantity + 1});
+    return result?.deletedCount === 1;
 }
 
 module.exports = {
@@ -55,5 +56,5 @@ module.exports = {
     getRent,
     getRents,
     addRent,
-    removeRent,
+    deleteRent,
 };

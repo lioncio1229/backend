@@ -25,7 +25,7 @@ async function updateVideo(videoId, payload)
     const result = await getVideoCollection().updateOne(
         { _id: new ObjectId(videoId) },
         {
-            $set: { ...payload, _id: new ObjectId(videoId) },
+            $set: { ...payload },
         },
         {
             upsert: true

@@ -1,7 +1,28 @@
 const rents = require('../../services/rents.js');
+const rentRequests = require('../../services/rentRequests.js');
 const videos = require('../../services/videos.js');
 const rentsRecords = require('../../services/rentsRecords.js');
 const users = require('../../services/users.js');
+
+async function addRent(req, res)
+{
+    try{
+        const { requestId } = req.query;
+        const rent = await rentRequests.getRentRequest(requestId);
+        if(!rent) {
+            res.status(404).send("Rent not found");
+            return;
+        }
+
+        const result = await rents.addRent(rent);
+        await rentRequests.deleteRentRequest(requestId);
+        res.status(200).send(result);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
 
 async function getRents(req, res)
 {
@@ -29,5 +50,6 @@ async function getRents(req, res)
 }
 
 module.exports = {
+    addRent,
     getRents,
 }

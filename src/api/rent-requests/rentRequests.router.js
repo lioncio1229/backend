@@ -5,7 +5,7 @@ const rentRequestsHandler = require('./rentRequests.handler.js');
 
 const router = express.Router();
 
-router.post('/:rentRequestId', verifyResourceAccess(), rentRequestsHandler.acceptRentRequest);
+router.post('/', verifyResourceAccess(), rentRequestsHandler.addRentRequest);
 router.get('/', verifyResourceAccess(), rentRequestsHandler.getAllRentRequest);
 router.delete('/:rentRequestId', verifyResourceAccess(), rentRequestsHandler.deleteRentRequest);
 

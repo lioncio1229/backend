@@ -24,7 +24,6 @@ router.delete('/permissions/:name/actions/:actionName', verifyResourceAccess(), 
 
 router.get('/videos', verifyResourceAccess(), videosHandler.getVideos);
 
-router.post('/rents', verifyResourceAccess(), rentsHandler.addRent);
 router.get('/rents', verifyResourceAccess(), rentsHandler.getRents);
 
 module.exports = { router };

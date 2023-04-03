@@ -1,18 +1,26 @@
 const rentRequests = require('../../services/rentRequests.js');
 const rents = require('../../services/rents.js');
 
-async function acceptRentRequest(req, res)
+
+async function addRentRequest(req, res)
 {
     try{
-        const { rentRequestId } = req.params;
-        const rent = await rentRequests.getRentRequest(rentRequestId);
-        if(!rent) {
-            res.status(404).send("Rent not found");
+        const { videoId } = req.query;
+        if(!videoId) throw new Error('Required Video Id');
+
+        const rent = await rents.getRentWithUsernameAndVideoId(req.username, videoId);
+
+        if(rent)
+        {
+            res.status(409).send('Video is currently renting');
             return;
         }
-
-        const result = await rents.addRent(rent);
-        await rentRequests.deleteRentRequest(rentRequestId);
+        const result = await rentRequests.addRentRequest(req.username, videoId);
+        if(!result)
+        {
+            res.status(409).send('Video is currently in renting requests');
+            return;
+        }
         res.status(200).send(result);
     }
     catch(e)
@@ -47,7 +55,7 @@ async function deleteRentRequest(req, res)
 }
 
 module.exports = {
-    acceptRentRequest,
+    addRentRequest,
     getAllRentRequest,
     deleteRentRequest,
 }

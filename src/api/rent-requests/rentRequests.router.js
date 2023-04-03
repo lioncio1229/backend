@@ -5,8 +5,8 @@ const rentRequestsHandler = require('./rentRequests.handler.js');
 
 const router = express.Router();
 
-router.post('/:rentRequestId', verifyResourceAccess(errors.noAccess), rentRequestsHandler.acceptRentRequest);
-router.get('/', verifyResourceAccess(errors.noAccess), rentRequestsHandler.getAllRentRequest);
-router.delete('/:rentRequestId', verifyResourceAccess(errors.noAccess), rentRequestsHandler.deleteRentRequest);
+router.post('/:rentRequestId', verifyResourceAccess(), rentRequestsHandler.acceptRentRequest);
+router.get('/', verifyResourceAccess(), rentRequestsHandler.getAllRentRequest);
+router.delete('/:rentRequestId', verifyResourceAccess(), rentRequestsHandler.deleteRentRequest);
 
 module.exports = { router };

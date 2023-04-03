@@ -54,8 +54,8 @@ async function deleteUser(req, res)
 {
     try{
         const {username} = req.params;
-        await users.deleteUser(username);
-        res.status(200).send(username);
+        const result = await users.deleteUser(username);
+        res.status(200).send(result);
     }
     catch(e)
     {

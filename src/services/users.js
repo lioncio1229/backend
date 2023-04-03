@@ -3,7 +3,8 @@ const { getUserCollections } = require("./databases.js");
 
 async function addUser(payload)
 {
-    await getUserCollections().insertOne({...payload});
+    const result = await getUserCollections().insertOne({...payload});
+    return result?.insertedId;
 }
 
 async function getUsers()
@@ -27,7 +28,7 @@ async function getUser(username)
 
 async function updateUser(username, payload)
 {
-    await getUserCollections().updateOne(
+    const result = await getUserCollections().updateOne(
       { username },
       {
         $set: {...payload},
@@ -36,12 +37,13 @@ async function updateUser(username, payload)
         upsert: true
       }
     );
+    return result?.upsertedCount === 1;
 }
 
 async function deleteUser(username)
 {
     const result = await getUserCollections().deleteOne({username});
-    return result.deletedCount === 1;
+    return result?.deletedCount === 1;
 }
 
 module.exports = {

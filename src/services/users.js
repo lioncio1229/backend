@@ -30,10 +30,7 @@ async function updateUser(username, payload)
     await getUserCollections().updateOne(
       { username },
       {
-        $set: {
-          username: payload.username,
-          password: payload.password,
-        },
+        $set: {...payload},
       },
       {
         upsert: true

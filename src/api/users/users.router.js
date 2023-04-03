@@ -1,17 +1,17 @@
 const express = require('express');
-const { errors } = require('../../config.js');
 const verifyResourceAccess = require('../../middleware/validation.js');
 const usersController = require('./users.handler.js');
 const permissionsHandler = require('./permissions.handler.js');
 const videosHandler = require('./videos.handler.js');
 const rentsHandler = require('./rents.handler.js');
+const {permissionNames, actions} = require('../../config.js');
 
 const router = express.Router();
 
-router.post('/', verifyResourceAccess(), usersController.addUser);
-router.get('/', verifyResourceAccess(), usersController.getUsers);
-router.put('/:username', verifyResourceAccess(), usersController.updateUser);
-router.delete('/:username', verifyResourceAccess(), usersController.deleteUser);
+router.post('/', verifyResourceAccess(permissionNames.users, actions.create), usersController.addUser);
+router.get('/', verifyResourceAccess(permissionNames.users, actions.get), usersController.getUsers);
+router.put('/:username', verifyResourceAccess(permissionNames.users, actions.update), usersController.updateUser);
+router.delete('/:username', verifyResourceAccess(permissionNames.users, actions.delete), usersController.deleteUser);
 
 router.post('/permissions/', verifyResourceAccess(), permissionsHandler.addPermission);
 router.get('/permissions/', verifyResourceAccess(), permissionsHandler.getPermissions);

@@ -13,4 +13,19 @@ const errors = {
     noAccess: {message: "You have no access to this resource", errorCode: 403},
 }
 
-module.exports = {env, appSettings, errors};
+const permissionNames = {
+    users: 'users',
+    videos: 'videos',
+    rents: 'rents',
+    rentsRequests: 'rentsRequests',
+    permissions: 'permissions',
+}
+
+const actions = {
+    get: 'get',
+    create: 'create',
+    update: 'update',
+    delete: 'delete',
+}
+
+module.exports = { env, appSettings, errors, permissionNames, actions };

@@ -4,6 +4,7 @@ const sessions = require('express-session');
 const { env } = require('./config.js');
 const { connect } = require('./services/connection.js');
 const routes = require('./routes.js');
+const addDefaultUser = require('./services/defaultUser.js');
 
 const app = express();
 const port = 3000;
@@ -35,6 +36,13 @@ if(env.NODE_ENV === 'production')
 }
 
 app.use(sessions(sessionObj));
+
+addDefaultUser().then(res => {
+    if(!res) return;
+
+    console.log('Default User added!');
+    console.log('UserId: ', res);
+});
 
 routes(app);
 

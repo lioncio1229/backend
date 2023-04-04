@@ -17,6 +17,8 @@ const permissionNames = {
     users: 'users',
     videos: 'videos',
     rents: 'rents',
+    userRents: 'userRents',
+    userVideos: 'userVideos',
     rentsRequests: 'rentsRequests',
     permissions: 'permissions',
 }

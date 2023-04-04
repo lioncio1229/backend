@@ -3,6 +3,7 @@ const { blacklistToken } = require('../../services/accessTokens.js');
 const { generateAccessToken, isAccessTokenValid } = require('../../helpers/accessToken.js');
 const { errors } = require('../../config.js');
 const CustomError = require('../../helpers/customError.js');
+const { permissionNames, actions } = require('../../config.js');
 
 async function signup(req, res)
 {
@@ -19,8 +20,10 @@ async function signup(req, res)
         }
 
         const permissions = [
-            {name: 'videos', actions: ['view']},
-            {name: 'request_rents', actions: ['add']},
+            {name: permissionNames.userVideos, actions: [actions.get]},
+            {name: permissionNames.userRents, actions: [actions.get]},
+            {name: permissionNames.rentsRequests, actions: [actions.create]},
+            {name: permissionNames.permissions, actions: [actions.get]},
         ];
 
         await addUser({username, fullname, password, permissions});

@@ -10,15 +10,15 @@ async function addUser(payload)
 async function getUsers()
 {
     const cursor = getUserCollections().find();
-    const customers = [];
-    await cursor.forEach(customer => customers.push(customer));
-    return customers;
+    const users = [];
+    await cursor.forEach(user => users.push(user));
+    return users;
 }
 
 async function isUserExist(username)
 {
-    const customers = await getUsers();
-    return customers.find(c => c.username === username) ? true : false;
+    const users = await getUsers();
+    return users.find(c => c.username === username) ? true : false;
 }
 
 async function getUser(username)

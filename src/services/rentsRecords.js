@@ -17,10 +17,10 @@ exports.getRecordsByMovie = (movies, rents) =>
     });
 }
 
-exports.getRecordsByCustomers = (customers, rents) => {
+exports.getRecordsByCustomers = (users, rents) => {
 
-    return customers.map(customer => {
-        const username = customer.username;
+    return users.map(user => {
+        const username = user.username;
         const rentList = rents.filter(rent => rent.username === username)
         .map(rent => {
             delete rent.username;

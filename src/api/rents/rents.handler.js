@@ -30,8 +30,8 @@ async function getRents(req, res)
         }
         else if(style === 'byCustomer')
         {
-            const customerList = await users.getUsers();
-            records = rentsRecords.getRecordsByCustomers(customerList, records);
+            const userList = await users.getUsers();
+            records = rentsRecords.getRecordsByCustomers(userList, records);
         }
 
         res.status(200).send(records);

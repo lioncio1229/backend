@@ -12,7 +12,7 @@ async function addUser(req, res)
         const isExist = await users.isUserExist(username);
         if(isExist)
         {
-            res.status(200).send('Customer Exist');
+            res.status(200).send('User Exist');
             return;
         }
         await users.addUser({username, password});
@@ -39,8 +39,8 @@ async function getUsers(req, res)
             };
         }
         else{
-            const customers = await users.getUsers();
-            result = customers.map(customer => customer.username);
+            const userList = await users.getUsers();
+            result = userList.map(user => user.username);
         }
         res.status(200).send(result);
     }

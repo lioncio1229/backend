@@ -4,6 +4,7 @@ const { generateAccessToken, isAccessTokenValid } = require('../../helpers/acces
 const { errors } = require('../../config.js');
 const CustomError = require('../../helpers/customError.js');
 const { permissionNames, actions } = require('../../config.js');
+const { decrypt } = require('../../helpers/crypto.js');
 
 async function signup(req, res)
 {
@@ -47,13 +48,16 @@ async function signin(req, res)
         }
 
         const {username, password} = req.body;
+        const decrypted = decrypt(password);
 
         const user = await getUser(username);
         
         let token;
-        if(user && user.password === password)
+        if(user)
         {
-            token = generateAccessToken(user);
+            const dbDecrypted = decrypt(user.password);
+            if(decrypted === dbDecrypted)
+                token = generateAccessToken(user);
         }
         
         if(token)

@@ -32,12 +32,9 @@ async function updateUser(username, payload)
       { username },
       {
         $set: {...payload},
-      },
-      {
-        upsert: true
       }
     );
-    return result?.upsertedCount === 1;
+    return result?.modifiedCount === 1;
 }
 
 async function deleteUser(username)

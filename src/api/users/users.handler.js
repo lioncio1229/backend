@@ -40,9 +40,8 @@ async function getUsers(req, res)
 async function updateUser(req, res)
 {
     try{
-        const {username, password} = req.body;
-        await users.updateUser(req.params.username, {username, password});
-        res.status(200).send(username);
+        const result = await users.updateUser(req.params.username, req.body);
+        res.status(200).send(result);
     }
     catch(e)
     {

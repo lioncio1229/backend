@@ -41,8 +41,11 @@ async function getMovies(req, res)
 async function getMoviesByUser(req, res)
 {
     try{
+        const { username } = req.params;
+        if(!username) throw new Error('username parameter required');
+
         const movieList = await movies.getMovies();
-        const rentList = await rents.getRents(req.username);
+        const rentList = await rents.getRents(username);
         const parsedMovies = movies.parseMovies(movieList, rentList);
         
         res.status(200).send(parsedMovies);

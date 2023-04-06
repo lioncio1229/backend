@@ -27,9 +27,22 @@ async function addUser(req, res)
 async function getUsers(req, res)
 {
     try{
-        const customers = await users.getUsers();
-        const parsedCustomers = customers.map(customer => customer.username);
-        res.status(200).send(parsedCustomers);
+        const { username } = req.params;
+        let result;
+        if(username)
+        {
+            const user = await users.getUser(username);
+            result = {
+              username: user.username,
+              fullname: user.fullname,
+              permissions: user.permissions,
+            };
+        }
+        else{
+            const customers = await users.getUsers();
+            result = customers.map(customer => customer.username);
+        }
+        res.status(200).send(result);
     }
     catch(e)
     {

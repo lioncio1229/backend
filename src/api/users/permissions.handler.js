@@ -4,11 +4,11 @@ const permissions = require('../../services/permissions.js');
 async function getPermissions(req, res)
 {
     try{
-        const {name} = req.params;
+        const {username, name} = req.params;
 
         let result;
-        if(name) result = await permissions.getPermission(req.username, name);
-        else result = await permissions.getPermissions(req.username);
+        if(name) result = await permissions.getPermission(username, name);
+        else result = await permissions.getPermissions(username);
 
         res.status(200).send(result);
     }
@@ -21,8 +21,9 @@ async function getPermissions(req, res)
 async function addPermission(req, res)
 {
     try{
+        const { username } = req.params;
         const {name, actions} = req.body;
-        const result = await permissions.addPermission(req.username, name, actions);
+        const result = await permissions.addPermission(username, name, actions);
         res.status(200).send(result);
     }
     catch(e)
@@ -34,7 +35,8 @@ async function addPermission(req, res)
 async function deletePermission(req, res)
 {
     try{
-        const result = await permissions.deletePermission(req.username, req.params.name);
+        const { username } = req.params;
+        const result = await permissions.deletePermission(username, req.params.name);
         res.status(200).send(result);
     }
     catch(e)
@@ -46,9 +48,11 @@ async function deletePermission(req, res)
 async function addAction(req, res)
 {
     try{
+        const { username } = req.params;
         const { actionName } = req.query;
+
         if(!actionName) throw new Error('actionName field required');
-        const result = await permissions.addAction(req.username, req.params.name, actionName);
+        const result = await permissions.addAction(username, req.params.name, actionName);
         res.status(200).send(result);        
     }
     catch(e)
@@ -60,8 +64,8 @@ async function addAction(req, res)
 async function getActions(req, res)
 {
     try{
-        const { name } = req.params;
-        const result = await permissions.getActions(req.username, name);
+        const { username, name } = req.params;
+        const result = await permissions.getActions(username, name);
         res.status(200).send(result);
     }
     catch(e)
@@ -73,8 +77,8 @@ async function getActions(req, res)
 async function deleteAction(req, res)
 {
     try{
-        const { name, actionName } = req.params;
-        const result = await permissions.deleteAction(req.username, name, actionName);
+        const { username, name, actionName } = req.params;
+        const result = await permissions.deleteAction(username, name, actionName);
         res.status(200).send(result);
     }
     catch(e)

@@ -45,7 +45,7 @@ async function getRents(req, res)
 async function getRentsByUser(req, res)
 {
     try{
-        const result = await rents.getRents(req.username);
+        const result = await rents.getRents(req.params.username);
         res.status(200).send(result);
     }
     catch(e)

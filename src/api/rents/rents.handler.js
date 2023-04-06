@@ -7,15 +7,9 @@ const users = require('../../services/users.js');
 async function addRent(req, res)
 {
     try{
-        const { requestId } = req.query;
-        const rent = await rentRequests.getRentRequest(requestId);
-        if(!rent) {
-            res.status(404).send("Rent not found");
-            return;
-        }
+        const { videoId } = req.query;
 
-        const result = await rents.addRent(rent);
-        await rentRequests.deleteRentRequest(requestId);
+        const result = await rents.addRent({username: req.username, videoId});
         res.status(200).send(result);
     }
     catch(e)

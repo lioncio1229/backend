@@ -2,8 +2,8 @@ const express = require('express');
 const verifyResourceAccess = require('../../middleware/validation.js');
 const usersController = require('./users.handler.js');
 const permissionsHandler = require('./permissions.handler.js');
-const videosHandler = require('./videos.handler.js');
-const rentsHandler = require('./rents.handler.js');
+const videosHandler = require('../videos/video.handler.js');
+const rentsHandler = require('../rents/rents.handler.js');
 const { permissionNames, actions } = require('../../config.js');
 
 const router = express.Router();
@@ -22,8 +22,8 @@ router.get('/permissions/:name/actions', verifyResourceAccess(permissionNames.pe
 router.post('/permissions/:name/actions', verifyResourceAccess(permissionNames.permissions, actions.create), permissionsHandler.addAction);
 router.delete('/permissions/:name/actions/:actionName', verifyResourceAccess(permissionNames.permissions, actions.delete), permissionsHandler.deleteAction);
 
-router.get('/videos', verifyResourceAccess(permissionNames.userVideos, actions.get), videosHandler.getVideos);
+router.get('/videos', verifyResourceAccess(permissionNames.userVideos, actions.get), videosHandler.getVideosByUser);
 
-router.get('/rents', verifyResourceAccess(permissionNames.userRents, actions.get), rentsHandler.getRents);
+router.get('/rents', verifyResourceAccess(permissionNames.userRents, actions.get), rentsHandler.getRentsByUser);
 
 module.exports = { router };

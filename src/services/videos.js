@@ -40,13 +40,13 @@ async function deleteVideo(videoId)
     return result.deletedCount === 1;
 }
 
-function parseVideos(videos, rents, rentRequests)
+function parseVideos(videos, rents)
 {
     return videos.map(video => {
         let rentChanges = {
             isRenting: false,
             dueDate: null,
-        }, isRequestingForRent = false;
+        };
         const videoId = video._id.toString();
 
         const rent = rents.find(rent => rent.videoId === videoId);
@@ -56,13 +56,9 @@ function parseVideos(videos, rents, rentRequests)
             rentChanges.dueDate = rent.dueDate
         }
 
-        const rentRequest = rentRequests.find(rentRequest => rentRequest.videoId === videoId);
-        if(rentRequest) isRequestingForRent = true;
-
         return {
             ...video,
             ...rentChanges,
-            isRequestingForRent,
         }
     });
 }

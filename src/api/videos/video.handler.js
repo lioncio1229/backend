@@ -1,5 +1,5 @@
 const videos = require("../../services/videos.js");
-
+const rents = require("../../services/rents.js");
 
 async function addVideo(req, res)
 {
@@ -31,6 +31,21 @@ async function getVideos(req, res)
     try{
         const videoList = await videos.getVideos();
         res.status(200).send(videoList);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
+async function getVideosByUser(req, res)
+{
+    try{
+        const videoList = await videos.getVideos();
+        const rentList = await rents.getRents(req.username);
+        const parsedVideos = videos.parseVideos(videoList, rentList);
+        
+        res.status(200).send(parsedVideos);
     }
     catch(e)
     {
@@ -80,4 +95,11 @@ async function deleteVideo(req, res)
 }
 
 
-module.exports = { addVideo, getVideo, getVideos, updateVideo, deleteVideo };
+module.exports = {
+  addVideo,
+  getVideo,
+  getVideos,
+  getVideosByUser,
+  updateVideo,
+  deleteVideo,
+};

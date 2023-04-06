@@ -43,6 +43,18 @@ async function getRents(req, res)
     }
 }
 
+async function getRentsByUser(req, res)
+{
+    try{
+        const result = await rents.getRents(req.username);
+        res.status(200).send(result);
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
 async function deleteRent(req, res)
 {
     try{
@@ -59,5 +71,6 @@ async function deleteRent(req, res)
 module.exports = {
     addRent,
     getRents,
+    getRentsByUser,
     deleteRent,
 }

@@ -1,6 +1,6 @@
 const { getRentCollection } = require("./databases");
 const { ObjectId } = require("mongodb");
-const { addDaytoCurrentTime } = require("../helpers/dateAndTime.js");
+const { addTime } = require("../helpers/dateAndTime.js");
 const { getMovie, updateMovie } = require('./movies.js');
 
 async function getRents(username=null)
@@ -30,7 +30,7 @@ async function addRent(payload)
         {
             $setOnInsert: {
                 ...payload,
-                dueDate: addDaytoCurrentTime(movie.rentDurationInDays),
+                expiresAt: addTime(movie.rentalExpiration).toLocaleString(),
             },
         },
         { upsert: true }

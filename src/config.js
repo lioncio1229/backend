@@ -19,7 +19,6 @@ const permissionNames = {
     rents: 'rents',
     userRents: 'userRents',
     userVideos: 'userVideos',
-    rentsRequests: 'rentsRequests',
     permissions: 'permissions',
 }
 

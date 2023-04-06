@@ -1,15 +1,14 @@
 const rents = require('../../services/rents.js');
-const rentRequests = require('../../services/rentRequests.js');
-const videos = require('../../services/videos.js');
+const movies = require('../../services/movies.js');
 const rentsRecords = require('../../services/rentsRecords.js');
 const users = require('../../services/users.js');
 
 async function addRent(req, res)
 {
     try{
-        const { videoId } = req.query;
+        const { movieId } = req.query;
 
-        const result = await rents.addRent({username: req.username, videoId});
+        const result = await rents.addRent({username: req.username, movieId});
         res.status(200).send(result);
     }
     catch(e)
@@ -24,10 +23,10 @@ async function getRents(req, res)
         const { style } = req.query;
         let records = await rents.getRents();
 
-        if(style === 'byVideo')
+        if(style === 'byMovie')
         {
-            const videList = await videos.getVideos();
-            records = rentsRecords.getRecordsByVideo(videList, records);
+            const videList = await movies.getMovies();
+            records = rentsRecords.getRecordsByMovie(videList, records);
         }
         else if(style === 'byCustomer')
         {

@@ -1,7 +1,7 @@
 const { getRentCollection } = require("./databases");
 const { ObjectId } = require("mongodb");
 const { addDaytoCurrentTime } = require("../helpers/dateAndTime.js");
-const { getVideo, updateVideo } = require('./videos.js');
+const { getMovie, updateMovie } = require('./movies.js');
 
 async function getRents(username=null)
 {
@@ -11,9 +11,9 @@ async function getRents(username=null)
     return arr;
 }
 
-async function getRentWithUsernameAndVideoId(username, videoId)
+async function getRentWithUsernameAndMovieId(username, movieId)
 {
-  return await getRentCollection().findOne({username, videoId});
+  return await getRentCollection().findOne({username, movieId});
 }
 
 async function getRent(rentId)
@@ -23,36 +23,36 @@ async function getRent(rentId)
 
 async function addRent(payload)
 {
-    const video = await getVideo(payload.videoId);
+    const movie = await getMovie(payload.movieId);
 
     const result = await getRentCollection().updateOne(
-        { username: payload.username, videoId: payload.videoId },
+        { username: payload.username, movieId: payload.movieId },
         {
             $setOnInsert: {
                 ...payload,
-                dueDate: addDaytoCurrentTime(video.rentDurationInDays),
+                dueDate: addDaytoCurrentTime(movie.rentDurationInDays),
             },
         },
         { upsert: true }
     );
 
-    await updateVideo(payload.videoId, {quantity: video.quantity - 1});
+    await updateMovie(payload.movieId, {quantity: movie.quantity - 1});
     return result.upsertedId;
 }
 
 async function deleteRent(rentId)
 {
     const rent = await getRent(rentId);
-    const video = await getVideo(rent.videoId);
+    const movie = await getMovie(rent.movieId);
     
     const result = await getRentCollection().deleteOne({_id: new ObjectId(rentId)});
 
-    await updateVideo(video._id, {quantity: video.quantity + 1});
+    await updateMovie(movie._id, {quantity: movie.quantity + 1});
     return result?.deletedCount === 1;
 }
 
 module.exports = {
-    getRentWithUsernameAndVideoId,
+    getRentWithUsernameAndMovieId,
     getRent,
     getRents,
     addRent,

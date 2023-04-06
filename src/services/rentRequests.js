@@ -1,12 +1,12 @@
 const { getRentRequestCollection } = require('./databases.js');
 const { ObjectId } = require('mongodb');
 
-async function addRentRequest(username, videoId)
+async function addRentRequest(username, movieId)
 {
     const result = await getRentRequestCollection().updateOne(
-        { username, videoId },
+        { username, movieId },
         {
-            $setOnInsert : { username, videoId }
+            $setOnInsert : { username, movieId }
         },
         {upsert: true}
     );

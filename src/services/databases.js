@@ -28,14 +28,9 @@ function getUserCollections()
     return getCollectionAtDatabase('users');
 }
 
-function getVideoCollection()
+function getMovieCollection()
 {
-    return getCollectionAtDatabase('videos');
-}
-
-function getRentRequestCollection()
-{
-    return getCollectionAtDatabase('rentRequests');
+    return getCollectionAtDatabase('movies');
 }
 
 function getRentCollection()
@@ -48,7 +43,6 @@ module.exports = {
     getAdminCollections,
     getBlacklistedTokenCollection,
     getUserCollections,
-    getVideoCollection,
-    getRentRequestCollection,
+    getMovieCollection,
     getRentCollection,
 }

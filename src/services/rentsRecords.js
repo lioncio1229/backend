@@ -1,17 +1,17 @@
 
 
-exports.getRecordsByVideo = (videos, rents) =>
+exports.getRecordsByMovie = (movies, rents) =>
 {
-    return videos.map(video => {
-        const videoId = video._id.toString();
-        const renters = rents.filter(rent => rent.videoId === videoId)
+    return movies.map(movie => {
+        const movieId = movie._id.toString();
+        const renters = rents.filter(rent => rent.movieId === movieId)
         .map(rent => {
-            delete rent.videoId;
+            delete rent.movieId;
             return rent;
         });
 
         return {
-            ...video,
+            ...movie,
             renters,
         };
     });

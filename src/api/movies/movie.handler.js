@@ -1,11 +1,11 @@
-const videos = require("../../services/videos.js");
+const movies = require("../../services/movies.js");
 const rents = require("../../services/rents.js");
 
-async function addVideo(req, res)
+async function addMovie(req, res)
 {
     try{
-        const videoId = await videos.addVideo(req.body);
-        res.status(200).send(videoId);
+        const movieId = await movies.addMovie(req.body);
+        res.status(200).send(movieId);
     }
     catch(e)
     {
@@ -13,12 +13,12 @@ async function addVideo(req, res)
     }
 }
 
-async function getVideo(req, res)
+async function getMovie(req, res)
 {
     try{
-        const {videoId} = req.params;
-        const video = await videos.getVideo(videoId);
-        res.status(200).send(video);
+        const {movieId} = req.params;
+        const movie = await movies.getMovie(movieId);
+        res.status(200).send(movie);
     }
     catch(e)
     {
@@ -26,11 +26,11 @@ async function getVideo(req, res)
     }
 }
 
-async function getVideos(req, res)
+async function getMovies(req, res)
 {
     try{
-        const videoList = await videos.getVideos();
-        res.status(200).send(videoList);
+        const movieList = await movies.getMovies();
+        res.status(200).send(movieList);
     }
     catch(e)
     {
@@ -38,14 +38,14 @@ async function getVideos(req, res)
     }
 }
 
-async function getVideosByUser(req, res)
+async function getMoviesByUser(req, res)
 {
     try{
-        const videoList = await videos.getVideos();
+        const movieList = await movies.getMovies();
         const rentList = await rents.getRents(req.username);
-        const parsedVideos = videos.parseVideos(videoList, rentList);
+        const parsedMovies = movies.parseMovies(movieList, rentList);
         
-        res.status(200).send(parsedVideos);
+        res.status(200).send(parsedMovies);
     }
     catch(e)
     {
@@ -53,15 +53,15 @@ async function getVideosByUser(req, res)
     }
 }
 
-async function updateVideo(req, res)
+async function updateMovie(req, res)
 {
     try{
-        const {videoId} = req.params;
+        const {movieId} = req.params;
         const {title, description, category, price, rentingDuration} = req.body;
         
-        if(!videoId)
+        if(!movieId)
         {
-            throw new Error('Please add videoId parameter');
+            throw new Error('Please add movieId parameter');
         }
 
         const payload = {};
@@ -72,7 +72,7 @@ async function updateVideo(req, res)
         if(price) payload.price = price;
         if(rentingDuration) payload.rentingDuration = rentingDuration;
 
-        const isUpdated = await videos.updateVideo(videoId, payload);
+        const isUpdated = await movies.updateMovie(movieId, payload);
         res.status(200).send(isUpdated);
     }
     catch(e)
@@ -81,11 +81,11 @@ async function updateVideo(req, res)
     }
 }
 
-async function deleteVideo(req, res)
+async function deleteMovie(req, res)
 {
     try{
-        const {videoId} = req.params;
-        const isDeleted = await videos.deleteVideo(videoId);
+        const { movieId } = req.params;
+        const isDeleted = await movies.deleteMovie(movieId);
         res.status(200).send(isDeleted);
     }
     catch(e)
@@ -96,10 +96,10 @@ async function deleteVideo(req, res)
 
 
 module.exports = {
-  addVideo,
-  getVideo,
-  getVideos,
-  getVideosByUser,
-  updateVideo,
-  deleteVideo,
+  addMovie,
+  getMovie,
+  getMovies,
+  getMoviesByUser,
+  updateMovie,
+  deleteMovie,
 };

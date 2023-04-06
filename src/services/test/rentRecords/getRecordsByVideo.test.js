@@ -3,15 +3,15 @@ const getRecords = require('../../rentsRecords.js');
 
 
 test('#1 - Testing getRecords', () => {
-    const videos = [
+    const movies = [
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
-            title: 'Video 1',
+            title: 'Movie 1',
             quantity: 23,
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
-            title: 'Video 2',
+            title: 'Movie 2',
             quantity: 15
         }
     ];
@@ -19,7 +19,7 @@ test('#1 - Testing getRecords', () => {
     const rents = [
         {
             username: 'camilsmary',
-            videoId: '64219e63d3bcad1388ebb9e9',
+            movieId: '64219e63d3bcad1388ebb9e9',
             dueDate: '3/30/2023'
         }
     ];
@@ -27,13 +27,13 @@ test('#1 - Testing getRecords', () => {
     const expected = [
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
-            title: 'Video 1',
+            title: 'Movie 1',
             quantity: 23,
             renters: []
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
-            title: 'Video 2',
+            title: 'Movie 2',
             quantity: 15,
             renters: [
                 {
@@ -44,19 +44,19 @@ test('#1 - Testing getRecords', () => {
         }
     ];
 
-    expect(getRecords.getRecordsByVideo(videos, rents)).toEqual(expected);
+    expect(getRecords.getRecordsByMovie(movies, rents)).toEqual(expected);
 });
 
 test('#2 - Testing getRecords', () => {
-    const videos = [
+    const movies = [
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
-            title: 'Video 1',
+            title: 'Movie 1',
             quantity: 23,
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
-            title: 'Video 2',
+            title: 'Movie 2',
             quantity: 15
         }
     ];
@@ -64,17 +64,17 @@ test('#2 - Testing getRecords', () => {
     const rents = [
         {
             username: 'camilsmary',
-            videoId: '64219e63d3bcad1388ebb9e9',
+            movieId: '64219e63d3bcad1388ebb9e9',
             dueDate: '3/30/2023'
         },
         {
             username: 'zilzoness',
-            videoId: '64219e63d3bcad1388ebb9e9',
+            movieId: '64219e63d3bcad1388ebb9e9',
             dueDate: '3/32/2023'
         },
         {
             username: 'maryjane and Camilo',
-            videoId: '64219e6ed3bcad1388ebb9e9',
+            movieId: '64219e6ed3bcad1388ebb9e9',
             dueDate: '3/-1/2023'
         },
     ];
@@ -82,7 +82,7 @@ test('#2 - Testing getRecords', () => {
     const expected = [
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
-            title: 'Video 1',
+            title: 'Movie 1',
             quantity: 23,
             renters: [{
                 username: 'maryjane and Camilo',
@@ -91,7 +91,7 @@ test('#2 - Testing getRecords', () => {
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
-            title: 'Video 2',
+            title: 'Movie 2',
             quantity: 15,
             renters: [
                 {
@@ -106,20 +106,20 @@ test('#2 - Testing getRecords', () => {
         }
     ];
 
-    expect(getRecords.getRecordsByVideo(videos, rents)).toEqual(expected);
+    expect(getRecords.getRecordsByMovie(movies, rents)).toEqual(expected);
 });
 
 
 test('#3 - Testing getRecords', () => {
-    const videos = [
+    const movies = [
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
-            title: 'Video 1',
+            title: 'Movie 1',
             quantity: 23,
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
-            title: 'Video 2',
+            title: 'Movie 2',
             quantity: 15
         }
     ];
@@ -129,17 +129,17 @@ test('#3 - Testing getRecords', () => {
     const expected = [
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
-            title: 'Video 1',
+            title: 'Movie 1',
             quantity: 23,
             renters: []
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
-            title: 'Video 2',
+            title: 'Movie 2',
             quantity: 15,
             renters: []
         }
     ];
 
-    expect(getRecords.getRecordsByVideo(videos, rents)).toEqual(expected);
+    expect(getRecords.getRecordsByMovie(movies, rents)).toEqual(expected);
 });

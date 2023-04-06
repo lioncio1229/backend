@@ -20,7 +20,7 @@ async function signup(req, res)
         }
 
         const permissions = [
-            {name: permissionNames.userVideos, actions: [actions.get]},
+            {name: permissionNames.userMovies, actions: [actions.get]},
             {name: permissionNames.userRents, actions: [actions.get]},
             {name: permissionNames.rents, actions: [actions.create]},
             {name: permissionNames.permissions, actions: [actions.get]},

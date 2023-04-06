@@ -1,8 +1,8 @@
-const { parseVideos } = require('../videos.js');
+const { parseMovies } = require('../movies.js');
 
 
-test('Testing parseVideos', () => {
-    const videos = [
+test('Testing parseMovies', () => {
+    const movies = [
         {
           _id: "641cea53eb9abdd7550e8312",
           title: 'Zilzo the action',
@@ -40,12 +40,12 @@ test('Testing parseVideos', () => {
         }
     ]
 
-    expect(parseVideos(videos, rents)).toEqual(output);
+    expect(parseMovies(movies, rents)).toEqual(output);
 });
 
 
-test('Testing parseVideos 2', () => {
-  const videos = [
+test('Testing parseMovies 2', () => {
+  const movies = [
       {
         _id: "641cea53eb9abdd7550e8312",
         title: 'Zilzo the action',
@@ -94,25 +94,25 @@ test('Testing parseVideos 2', () => {
     },
   ]
 
-  expect(parseVideos(videos, rents)).toEqual(output);
+  expect(parseMovies(movies, rents)).toEqual(output);
 });
 
-test('Testing parseVideos 3', () => {
-  const videos = []
+test('Testing parseMovies 3', () => {
+  const movies = []
 
   const rents = [];
 
   const output = []
 
-  expect(parseVideos(videos, rents)).toEqual(output);
+  expect(parseMovies(movies, rents)).toEqual(output);
 });
 
-test('Testing parseVideos 4', () => {
-  const videos = []
+test('Testing parseMovies 4', () => {
+  const movies = []
 
   const rents = ['641cf4f96a4167b25aacd08d', '641c2469aa00b327673653c1'];
 
   const output = [];
 
-  expect(parseVideos(videos, rents)).toEqual(output);
+  expect(parseMovies(movies, rents)).toEqual(output);
 });

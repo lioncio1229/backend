@@ -15,10 +15,10 @@ const errors = {
 
 const permissionNames = {
     users: 'users',
-    videos: 'videos',
+    movies: 'movies',
     rents: 'rents',
     userRents: 'userRents',
-    userVideos: 'userVideos',
+    userMovies: 'userMovies',
     permissions: 'permissions',
 }
 

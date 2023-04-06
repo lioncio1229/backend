@@ -2,7 +2,7 @@ const express = require('express');
 const verifyResourceAccess = require('../../middleware/validation.js');
 const usersController = require('./users.handler.js');
 const permissionsHandler = require('./permissions.handler.js');
-const videosHandler = require('../videos/video.handler.js');
+const moviesHandler = require('../movies/movie.handler.js');
 const rentsHandler = require('../rents/rents.handler.js');
 const { permissionNames, actions } = require('../../config.js');
 
@@ -22,7 +22,7 @@ router.get('/permissions/:name/actions', verifyResourceAccess(permissionNames.pe
 router.post('/permissions/:name/actions', verifyResourceAccess(permissionNames.permissions, actions.create), permissionsHandler.addAction);
 router.delete('/permissions/:name/actions/:actionName', verifyResourceAccess(permissionNames.permissions, actions.delete), permissionsHandler.deleteAction);
 
-router.get('/videos', verifyResourceAccess(permissionNames.userVideos, actions.get), videosHandler.getVideosByUser);
+router.get('/movies', verifyResourceAccess(permissionNames.userMovies, actions.get), moviesHandler.getMoviesByUser);
 
 router.get('/rents', verifyResourceAccess(permissionNames.userRents, actions.get), rentsHandler.getRentsByUser);
 

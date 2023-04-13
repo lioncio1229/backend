@@ -64,10 +64,26 @@ async function deleteRent(rentId)
     return result?.deletedCount === 1;
 }
 
+async function rentRemainingTime(rentId)
+{
+    const rent = await getRent(rentId);
+    if(!rent) return 0;
+
+    let rTime = (new Date(rent.expiresAt) - new Date()) / 1000;
+    
+    if(rTime <= 0)
+    {
+        await getRentCollection().deleteOne({_id: new ObjectId(rentId)});
+        return 0;
+    }
+    return rTime;
+}
+
 module.exports = {
     getRentWithUsernameAndMovieId,
     getRent,
     getRents,
     addRent,
     deleteRent,
+    rentRemainingTime,
 };

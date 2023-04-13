@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/', verifyResourceAccess(permissionNames.rents, actions.create), rentsHandler.addRent);
 router.get('/', verifyResourceAccess(permissionNames.rents, actions.get), rentsHandler.getRents);
 router.delete('/:rentId', verifyResourceAccess(permissionNames.rents, actions.delete), rentsHandler.deleteRent);
+router.get('/:rentId', verifyResourceAccess(permissionNames.rents, actions.get), rentsHandler.getRentEvent);
 
 module.exports = { router };

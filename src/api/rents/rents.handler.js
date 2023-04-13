@@ -67,9 +67,42 @@ async function deleteRent(req, res)
     }
 }
 
+async function getRentEvent(req, res)
+{
+    try{
+        const { rentId } = req.params;
+        res.setHeader('Content-Type', 'text/event-stream');
+        res.setHeader('Cache-Control', 'no-cache');
+        res.setHeader('Connection', 'keep-alive');
+
+        res.write(`event: start\ndata: ${JSON.stringify({message: 'Connection established'})}\n\n`);
+
+        async function sendEvent() {
+
+            const rTime = await rents.rentRemainingTime(rentId);
+
+            if (rTime <= 0) {
+                res.write(`event: end\ndata: ${JSON.stringify({ rentId })}\n\n`);
+                return res.end();
+            }
+
+            res.write(`event: update\ndata: ${JSON.stringify({remainingTime: rTime})}\n\n`);
+
+            setTimeout(sendEvent, 3000);
+        }
+
+        await sendEvent();
+    }
+    catch(e)
+    {
+        res.status(500).send(e.message);
+    }
+}
+
 module.exports = {
     addRent,
     getRents,
     getRentsByUser,
     deleteRent,
+    getRentEvent,
 }

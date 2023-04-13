@@ -6,8 +6,21 @@ const { getMovie, updateMovie } = require('./movies.js');
 async function getRents(username=null)
 {
     const cursor = getRentCollection().find(username ? {username} : {});
-    const arr = [];
-    await cursor.forEach(item => arr.push(item));
+    let arr = [], expiredIds = [], cDate = new Date();
+    await cursor.forEach(item => {
+        arr.push(item);
+        if(cDate > new Date(item.expiresAt))
+            expiredIds.push(item._id);
+    });
+
+    if(expiredIds.length > 0)
+    {
+        await getRentCollection().deleteMany({
+            $or: expiredIds.map(_id => ({ _id }))
+        });
+        arr = arr.filter(v => expiredIds.includes(v._id));
+    }
+
     return arr;
 }
 
@@ -30,7 +43,7 @@ async function addRent(payload)
         {
             $setOnInsert: {
                 ...payload,
-                expiresAt: addTime(movie.rentalExpiration).toLocaleString(),
+                expiresAt: addTime(movie.rentalExpiration),
             },
         },
         { upsert: true }

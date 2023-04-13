@@ -45,7 +45,7 @@ function parseMovies(movies, rents)
     return movies.map(movie => {
         let rentChanges = {
             isRenting: false,
-            dueDate: null,
+            expiresAt: null,
         };
         const movieId = movie._id.toString();
 
@@ -53,7 +53,7 @@ function parseMovies(movies, rents)
         if(rent)
         {
             rentChanges.isRenting = true;
-            rentChanges.dueDate = rent.dueDate
+            rentChanges.expiresAt = rent.expiresAt
         }
 
         return {

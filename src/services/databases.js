@@ -38,6 +38,11 @@ function getRentCollection()
     return getCollectionAtDatabase('rents');
 }
 
+function getPaymentTokenCollection()
+{
+    return getCollectionAtDatabase('paymentTokens');
+}
+
 module.exports = {
     getCollectionAtDatabase,
     getAdminCollections,
@@ -45,4 +50,5 @@ module.exports = {
     getUserCollections,
     getMovieCollection,
     getRentCollection,
+    getPaymentTokenCollection,
 }

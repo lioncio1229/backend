@@ -5,8 +5,10 @@ dotenv.config();
 const env = process.env;
 
 const appSettings = {
-    access_token_expiration: '3600s'
+    access_token_expiration: '3600s',
+    paypalDomain: env.NODE_ENV === 'development' || env.PAYPAL_TEST ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com',
 }
+
 const errors = {
     alreadyLogin: {message: 'Already Login', errorCode: 406},
     alreadyLogout: {message: 'Already Logout', errorCode: 204},

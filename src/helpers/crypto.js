@@ -9,7 +9,7 @@ function encrypt(plainText)
 
 function decrypt (encrypted)
 {
-    return CryptoJS.AES.decrypt(encrypted, env.PASSWORD_SECRET_KEY).toString();
+    return CryptoJS.AES.decrypt(encrypted, env.PASSWORD_SECRET_KEY).toString(CryptoJS.enc.Utf8);
 }
 
 module.exports = {

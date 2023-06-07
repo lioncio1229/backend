@@ -8,7 +8,7 @@ const addDefaultUser = require('./services/defaultUser.js');
 
 const app = express();
 const port = 3000;
-const maxAge = 1000  * 60 * 2;
+const maxAge = 60 * 60 * 1000;
 
 const corsOptions = {
     credentials: true,

@@ -44,8 +44,8 @@ async function signin(req, res)
 
         if(isAccessTokenValid(req.session.accessToken))
         {
-            const {message, errorCode} = errors.alreadyLogin;
-            throw new CustomError(message, errorCode);
+            res.status(200).send({});
+            return;
         }
 
         const {username, password} = req.body;

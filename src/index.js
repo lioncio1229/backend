@@ -5,7 +5,7 @@ const { env } = require('./config.js');
 const { connect } = require('./services/connection.js');
 const routes = require('./routes.js');
 const addDefaultUser = require('./services/defaultUser.js');
-const {minioClient} = require('./minio-client');
+const {mc} = require('./minio-client');
 
 const app = express();
 const port = 3000;

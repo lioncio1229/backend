@@ -2,7 +2,7 @@ const minio = require('minio');
 const {env, appSettings} = require('./config.js');
 
 
-const minioClient = new minio.Client({
+const mc = new minio.Client({
     endPoint: env.MINIO_ENDPOINT,
     port: parseInt(env.MINIO_PORT),
     useSSL: !!env.production,
@@ -12,25 +12,25 @@ const minioClient = new minio.Client({
 
 
 function uploadImage(fileName, fileStream, size){
-    return minioClient.putObject(appSettings.imagesBucketName, fileName, fileStream, size);
+    return mc.putObject(appSettings.imagesBucketName, fileName, fileStream, size);
 }
 
 function uploadVideo(fileName, fileStream, size){
-    return minioClient.putObject(appSettings.videosBucketName, fileName, fileStream, size);
+    return mc.putObject(appSettings.videosBucketName, fileName, fileStream, size);
 }
 
 async function getImagePresignedUrl(objectName){
-    const presignedUrl = await minioClient.presignedGetObject(appSettings.imagesBucketName, objectName, 24 * 60 * 60);
+    const presignedUrl = await mc.presignedGetObject(appSettings.imagesBucketName, objectName, 24 * 60 * 60);
     return presignedUrl;
 }
 
 async function getVideoPresignedUrl(objectName){
-    const presignedUrl = await minioClient.presignedGetObject(appSettings.videosBucketName, objectName, 24 * 60 * 60);
+    const presignedUrl = await mc.presignedGetObject(appSettings.videosBucketName, objectName, 24 * 60 * 60);
     return presignedUrl;
 }
 
 module.exports = {
-    minioClient,
+    mc,
     uploadImage,
     getImagePresignedUrl,
     uploadVideo,

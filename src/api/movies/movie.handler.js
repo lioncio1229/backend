@@ -7,10 +7,11 @@ async function addMovie(req, res)
 {
     try{
         const files = req.files;
-
-        if(files.image.length === 0 || files.video.length === 0)
+        
+        if(!files.image || !files.video)
         {
             res.status(400).send('Please upload required files');
+            return;
         }
 
         const image = files.image[0];

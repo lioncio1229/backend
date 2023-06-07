@@ -7,6 +7,8 @@ const env = process.env;
 const appSettings = {
     access_token_expiration: '3600s',
     paypalDomain: env.NODE_ENV === 'development' || env.PAYPAL_TEST ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com',
+    imagesBucketName: 'images-bucket',
+    videosBucketName: 'videos-bucket',
 }
 
 const errors = {

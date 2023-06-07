@@ -1,11 +1,39 @@
 const movies = require("../../services/movies.js");
 const rents = require("../../services/rents.js");
+const {uploadImage, uploadVideo, getImagePresignedUrl, getVideoPresignedUrl} = require('../../minio-client.js');
+
 
 async function addMovie(req, res)
 {
     try{
+        const files = req.files;
+
+        if(files.image.length === 0 || files.video.length === 0)
+        {
+            res.status(400).send('Please upload required files');
+        }
+
+        const image = files.image[0];
+        const imgName =  `img-${Date.now()}.${image.mimetype.split('/')[1]}`;
+        await uploadImage(imgName, image.buffer, image.size);
+        const presignedImageUrl = await getImagePresignedUrl(imgName);
+
+        const video = files.video[0];
+        const videoName = `video-${Date.now()}.${video.mimetype.split('/')[1]}`;
+
+        await uploadVideo(videoName, video.buffer, video.size)
+        const presignedVideoUrl = await getVideoPresignedUrl(videoName);
+
+        req.body['imageName'] = imgName;
+        req.body['videoName'] = videoName;
         const movieId = await movies.addMovie(req.body);
-        res.status(200).send(movieId);
+
+        res.status(200).send({
+            movieId,
+            imageUrl: presignedImageUrl,
+            videoUrl: presignedVideoUrl,
+            ...req.body,
+        });
     }
     catch(e)
     {

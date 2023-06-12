@@ -1,7 +1,7 @@
 const { getRentCollection } = require("./databases");
 const { ObjectId } = require("mongodb");
 const { addTime } = require("../helpers/dateAndTime.js");
-const { getMovie, updateMovie } = require('./movies.js');
+const { getMovie } = require('./movies.js');
 
 async function getRents(username=null)
 {
@@ -49,18 +49,12 @@ async function addRent(payload)
         { upsert: true }
     );
 
-    await updateMovie(payload.movieId, {quantity: movie.quantity - 1});
     return result.upsertedId;
 }
 
 async function deleteRent(rentId)
-{
-    const rent = await getRent(rentId);
-    const movie = await getMovie(rent.movieId);
-    
+{    
     const result = await getRentCollection().deleteOne({_id: new ObjectId(rentId)});
-
-    await updateMovie(movie._id, {quantity: movie.quantity + 1});
     return result?.deletedCount === 1;
 }
 

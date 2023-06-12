@@ -7,12 +7,10 @@ test('#1 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
             title: 'Movie 1',
-            quantity: 23,
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Movie 2',
-            quantity: 15
         }
     ];
 
@@ -28,13 +26,11 @@ test('#1 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
             title: 'Movie 1',
-            quantity: 23,
             renters: []
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Movie 2',
-            quantity: 15,
             renters: [
                 {
                     username: 'camilsmary',
@@ -52,12 +48,10 @@ test('#2 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
             title: 'Movie 1',
-            quantity: 23,
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Movie 2',
-            quantity: 15
         }
     ];
 
@@ -83,7 +77,6 @@ test('#2 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
             title: 'Movie 1',
-            quantity: 23,
             renters: [{
                 username: 'maryjane and Camilo',
                 dueDate: '3/-1/2023'
@@ -92,7 +85,6 @@ test('#2 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Movie 2',
-            quantity: 15,
             renters: [
                 {
                     username: 'camilsmary',
@@ -115,12 +107,10 @@ test('#3 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
             title: 'Movie 1',
-            quantity: 23,
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Movie 2',
-            quantity: 15
         }
     ];
 
@@ -130,13 +120,11 @@ test('#3 - Testing getRecords', () => {
         {
             _id : new ObjectId('64219e6ed3bcad1388ebb9e9'),
             title: 'Movie 1',
-            quantity: 23,
             renters: []
         },
         {
             _id : new ObjectId('64219e63d3bcad1388ebb9e9'),
             title: 'Movie 2',
-            quantity: 15,
             renters: []
         }
     ];

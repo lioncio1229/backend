@@ -1,39 +1,47 @@
 const movies = require("../../services/movies.js");
 const rents = require("../../services/rents.js");
-const {uploadImage, uploadVideo, getImagePresignedUrl, getVideoPresignedUrl} = require('../../minio-client.js');
+const {uploadObjectWithId, updateObject, getImageUrl, getVideoUrl} = require('../../minio-client.js');
 
+
+function parseBody({title, description, price, rentingDuration})
+{
+    const payload = {};
+
+    if(title) payload.title = title;
+    if(description) payload.description = description;
+    if(price) payload.price = price;
+    if(rentingDuration) payload.rentingDuration = rentingDuration;
+
+    return payload;
+}
 
 async function addMovie(req, res)
 {
     try{
         const files = req.files;
-        
-        if(!files.image || !files.video)
+        const parsedBody = parseBody(req.body);
+        const others = {};
+
+        const movieId = await movies.addMovie(parsedBody);
+
+        if(files.image)
         {
-            res.status(400).send('Please upload required files');
-            return;
+            const [url, imageName] = await uploadObjectWithId(movieId, files.image[0]);
+            parsedBody['imageUrl'] = url;
+            others['imageName'] = imageName;
+        }
+        if(files.video)
+        {
+            const [url, videoName] = await uploadObjectWithId(movieId, files.video[0]);
+            parsedBody['videoUrl'] = url;
+            others['videoName'] = videoName;
         }
 
-        const image = files.image[0];
-        const imgName =  `img-${Date.now()}.${image.mimetype.split('/')[1]}`;
-        await uploadImage(imgName, image.buffer, image.size);
-        const presignedImageUrl = await getImagePresignedUrl(imgName);
-
-        const video = files.video[0];
-        const videoName = `video-${Date.now()}.${video.mimetype.split('/')[1]}`;
-
-        await uploadVideo(videoName, video.buffer, video.size)
-        const presignedVideoUrl = await getVideoPresignedUrl(videoName);
-
-        req.body['imageName'] = imgName;
-        req.body['videoName'] = videoName;
-        const movieId = await movies.addMovie(req.body);
+        await movies.updateMovie(movieId, {...others});
 
         res.status(200).send({
-            movieId,
-            imageUrl: presignedImageUrl,
-            videoUrl: presignedVideoUrl,
-            ...req.body,
+            ...others,
+            ...parsedBody,
         });
     }
     catch(e)
@@ -89,23 +97,68 @@ async function updateMovie(req, res)
 {
     try{
         const {movieId} = req.params;
-        const {title, description, category, price, rentingDuration} = req.body;
         
         if(!movieId)
         {
             throw new Error('Please add movieId parameter');
         }
 
-        const payload = {};
+        const movie = await movies.getMovie(movieId);
+        if(!movie)
+        {
+            res.status(404).send("Can't find movie to update");
+            return;
+        }
+        
+        const parsedBody = parseBody(req.body);
+        const files = req.files;
+        const others = {}
 
-        if(title) payload.title = title;
-        if(description) payload.description = description;
-        if(category) payload.category = category;
-        if(price) payload.price = price;
-        if(rentingDuration) payload.rentingDuration = rentingDuration;
+        if(files.image)
+        {
+            let objRes;
+            let imageFile = files.image[0];
 
-        const isUpdated = await movies.updateMovie(movieId, payload);
-        res.status(200).send(isUpdated);
+            if(movie.imageName) objRes = await updateObject(movie.imageName, movieId, imageFile);
+            else objRes = await uploadObjectWithId(movieId, files.image[0]);
+
+            if(objRes && objRes.length > 0) 
+            {
+                others['imageUrl'] = objRes[0];
+                parsedBody['imageName'] = objRes[1];
+            }
+        }
+        else if(movie.imageName){
+            const imageUrl = await getImageUrl(movie.imageName);
+            if(imageUrl) others['imageUrl'] = imageUrl;
+        }
+
+        if(files.video)
+        {
+            let objRes;
+            let videoFile = files.video[0];
+
+            if(movie.videoName) objRes = await updateObject(movie.videoName, movieId, videoFile);
+            else objRes = await uploadObjectWithId(movieId, files.video[0]);
+
+            if(objRes && objRes.length > 0) 
+            {
+                others['videoUrl'] = objRes[0];
+                parsedBody['videoName'] = objRes[1];
+            }
+        }
+        else if(movie.videoName){
+            const videoName = await getVideoUrl(movie.videoName);
+            if(videoName) others['videoUrl'] = videoName;
+        }
+
+        await movies.updateMovie(movieId, parsedBody);
+        
+        res.status(200).send({
+            ...movie,
+            ...parsedBody,
+            ...others,
+        });
     }
     catch(e)
     {

@@ -10,29 +10,63 @@ const mc = new minio.Client({
     secretKey: env.MINIO_SECRET_KEY,
 });
 
+async function uploadObjectStream(objectName, buffer, fileType)
+{
+    let bucketName = '';
+    let url = '';
+    if(fileType === 'image') 
+    {
+        bucketName = appSettings.imagesBucketName;
+        url = await getImageUrl(objectName);
+    }
+    else if(fileType === 'video') {
+        bucketName = appSettings.videosBucketName;
+        url = await getVideoUrl(objectName);
+    }
 
-function uploadImage(fileName, fileStream, size){
-    return mc.putObject(appSettings.imagesBucketName, fileName, fileStream, size);
+    await mc.putObject(bucketName, objectName, buffer);
+
+    return [url, objectName];
 }
 
-function uploadVideo(fileName, fileStream, size){
-    return mc.putObject(appSettings.videosBucketName, fileName, fileStream, size);
+async function getImageUrl(objectName)
+{
+    return await mc.presignedGetObject(appSettings.imagesBucketName, objectName, 24 * 60 * 60);
 }
 
-async function getImagePresignedUrl(objectName){
-    const presignedUrl = await mc.presignedGetObject(appSettings.imagesBucketName, objectName, 24 * 60 * 60);
-    return presignedUrl;
+async function getVideoUrl(objectName)
+{
+    return await mc.presignedGetObject(appSettings.videosBucketName, objectName, 24 * 60 * 60);
 }
 
-async function getVideoPresignedUrl(objectName){
-    const presignedUrl = await mc.presignedGetObject(appSettings.videosBucketName, objectName, 24 * 60 * 60);
-    return presignedUrl;
+async function uploadObjectWithId(id, file)
+{
+    const [type, format] = file.mimetype.split('/');
+    const objectName = `${type}-${id}.${format}`;
+
+    return await uploadObjectStream(objectName, file.buffer, type);
+}
+
+async function updateObject(prevObjectName, id, file)
+{
+    const [type] = file.mimetype.split('/');
+
+    if(prevObjectName)
+    {
+        let bucketName = '';
+        if(type === 'image') bucketName = appSettings.imagesBucketName;
+        else if(type === 'video') bucketName = appSettings.videosBucketName;
+
+        await mc.removeObject(bucketName, prevObjectName);
+    }
+    return await uploadObjectWithId(id, file);
 }
 
 module.exports = {
     mc,
-    uploadImage,
-    getImagePresignedUrl,
-    uploadVideo,
-    getVideoPresignedUrl
+    uploadObjectStream,
+    uploadObjectWithId,
+    updateObject,
+    getImageUrl,
+    getVideoUrl,
 }

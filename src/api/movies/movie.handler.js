@@ -1,7 +1,12 @@
 const movies = require("../../services/movies.js");
 const rents = require("../../services/rents.js");
-const {uploadObjectWithId, updateObject, getImageUrl, getVideoUrl} = require('../../minio-client.js');
-const fs = require('fs');
+const {
+    uploadObjectWithId,
+    updateObject,
+    getImageUrl,
+    getVideoUrl,
+    removeObject,
+} = require("../../minio-client.js");
 
 function parseBody({title, description, price, rentingDuration})
 {
@@ -170,7 +175,19 @@ async function deleteMovie(req, res)
 {
     try{
         const { movieId } = req.params;
+
+        const movie = await movies.getMovie(movieId);
+        if(!movie)
+        {
+            res.status(404).send("Can't find movie to be deleted");
+            return;
+        }
+
+        if(movie.imageName) await removeObject(movie.imageName, 'image');
+        if(movie.videoName) await removeObject(movie.videoName, 'video');
+
         const isDeleted = await movies.deleteMovie(movieId);
+
         res.status(200).send(isDeleted);
     }
     catch(e)

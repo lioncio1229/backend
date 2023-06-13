@@ -47,18 +47,21 @@ async function uploadObjectWithId(id, file)
     return await uploadObjectStream(objectName, file.buffer, type);
 }
 
+async function removeObject(objectName, type)
+{
+    let bucketName = '';
+    if(type === 'image') bucketName = appSettings.imagesBucketName;
+    else if(type === 'video') bucketName = appSettings.videosBucketName;
+
+    await mc.removeObject(bucketName, objectName);
+}
+
 async function updateObject(prevObjectName, id, file)
 {
     const [type] = file.mimetype.split('/');
 
-    if(prevObjectName)
-    {
-        let bucketName = '';
-        if(type === 'image') bucketName = appSettings.imagesBucketName;
-        else if(type === 'video') bucketName = appSettings.videosBucketName;
+    if(prevObjectName) removeObject(prevObjectName, type);
 
-        await mc.removeObject(bucketName, prevObjectName);
-    }
     return await uploadObjectWithId(id, file);
 }
 
@@ -69,4 +72,5 @@ module.exports = {
     updateObject,
     getImageUrl,
     getVideoUrl,
+    removeObject,
 }

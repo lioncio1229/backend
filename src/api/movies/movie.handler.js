@@ -1,7 +1,7 @@
 const movies = require("../../services/movies.js");
 const rents = require("../../services/rents.js");
 const {uploadObjectWithId, updateObject, getImageUrl, getVideoUrl} = require('../../minio-client.js');
-
+const fs = require('fs');
 
 function parseBody({title, description, price, rentingDuration})
 {
@@ -120,7 +120,7 @@ async function updateMovie(req, res)
             let imageFile = files.image[0];
 
             if(movie.imageName) objRes = await updateObject(movie.imageName, movieId, imageFile);
-            else objRes = await uploadObjectWithId(movieId, files.image[0]);
+            else objRes = await uploadObjectWithId(movieId, imageFile);
 
             if(objRes && objRes.length > 0) 
             {
@@ -139,7 +139,7 @@ async function updateMovie(req, res)
             let videoFile = files.video[0];
 
             if(movie.videoName) objRes = await updateObject(movie.videoName, movieId, videoFile);
-            else objRes = await uploadObjectWithId(movieId, files.video[0]);
+            else objRes = await uploadObjectWithId(movieId, videoFile);
 
             if(objRes && objRes.length > 0) 
             {

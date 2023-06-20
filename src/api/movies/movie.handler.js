@@ -146,7 +146,7 @@ async function updateMovie(req, res)
         const files = req.files;
         const others = {}
 
-        if(files.image)
+        if(files && files.image)
         {
             let objRes;
             let imageFile = files.image[0];
@@ -165,7 +165,7 @@ async function updateMovie(req, res)
             if(imageUrl) others['imageUrl'] = imageUrl;
         }
 
-        if(files.video)
+        if(files && files.video)
         {
             let objRes;
             let videoFile = files.video[0];

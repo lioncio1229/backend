@@ -42,7 +42,7 @@ async function getVideoUrl(objectName)
 async function uploadObjectWithId(id, file)
 {
     const [type, format] = file.mimetype.split('/');
-    const objectName = `${type}-${id}.${format}`;
+    const objectName = `${type}-${id}.${format === 'x-matroska' ? 'mkv' : format}`;
 
     return await uploadObjectStream(objectName, file.buffer, type);
 }

@@ -20,6 +20,25 @@ function parseBody({title, description, price, rentingDuration})
     return payload;
 }
 
+async function mapObjectUrl(movieList)
+{
+    const newMovieList = [];
+    for(const movie of movieList)
+    {
+        const others = {};
+        if(movie.imageName) 
+        {
+            others['imageUrl'] = await getImageUrl(movie.imageName);
+        }
+        if(movie.videoName)
+        {
+            others['videoUrl'] = await getVideoUrl(movie.videoName);
+        }
+        newMovieList.push({...movie, ...others});
+    }
+    return newMovieList;
+}
+
 async function addMovie(req, res)
 {
     try{
@@ -60,7 +79,13 @@ async function getMovie(req, res)
     try{
         const {movieId} = req.params;
         const movie = await movies.getMovie(movieId);
-        res.status(200).send(movie);
+        const others = {};
+        if(movie)
+        {
+            if(movie.imageName) others['imageUrl'] = await getImageUrl(movie.imageName);
+            if(movie.videoName) others['videoUrl'] = await getVideoUrl(movie.videoName);
+        }
+        res.status(200).send({...movie, ...others});
     }
     catch(e)
     {
@@ -71,7 +96,8 @@ async function getMovie(req, res)
 async function getMovies(req, res)
 {
     try{
-        const movieList = await movies.getMovies();
+        let movieList = await movies.getMovies();
+        movieList = await mapObjectUrl(movieList);
         res.status(200).send(movieList);
     }
     catch(e)
@@ -86,7 +112,8 @@ async function getMoviesByUser(req, res)
         const { username } = req.params;
         if(!username) throw new Error('username parameter required');
 
-        const movieList = await movies.getMovies();
+        let movieList = await movies.getMovies();
+        movieList = await mapObjectUrl(movieList);
         const rentList = await rents.getRents(username);
         const parsedMovies = movies.parseMovies(movieList, rentList);
         

@@ -173,6 +173,7 @@ async function updateMovie(req, res)
         {
             let objRes;
             let imageFile = files.image[0];
+            checkIfMimeTypeSupported(imageFile.mimetype);
 
             if(movie.imageName) objRes = await updateObject(movie.imageName, movieId, imageFile);
             else objRes = await uploadObjectWithId(movieId, imageFile);
@@ -192,6 +193,7 @@ async function updateMovie(req, res)
         {
             let objRes;
             let videoFile = files.video[0];
+            checkIfMimeTypeSupported(videoFile.mimetype);
 
             if(movie.videoName) objRes = await updateObject(movie.videoName, movieId, videoFile);
             else objRes = await uploadObjectWithId(movieId, videoFile);

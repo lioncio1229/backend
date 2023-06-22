@@ -8,6 +8,10 @@ const {
     removeObject,
 } = require("../../minio-client.js");
 
+const {appSettings: {supportedImageTypes, supportedVideoTypes}} = require('../../config.js');
+const { ObjectId } = require('mongodb');
+const CustomError = require('../../helpers/customError.js');
+
 function parseBody({title, description, price, rentingDuration})
 {
     const payload = {};
@@ -39,38 +43,57 @@ async function mapObjectUrl(movieList)
     return newMovieList;
 }
 
+function checkIfMimeTypeSupported(mimeType)
+{
+    const [type, ext] = mimeType.split('/');
+    const supported = type === 'image' ? supportedImageTypes : supportedVideoTypes;
+
+    if(!supported.includes(ext))
+    {
+        throw new CustomError(`${ext} ${type} file type is not supported`, {errorCode: 415});
+    }
+}
+
 async function addMovie(req, res)
 {
     try{
         const files = req.files;
         const parsedBody = parseBody(req.body);
-        const others = {};
+        const urls = {}, others = {};
 
-        const movieId = await movies.addMovie(parsedBody);
+        const movieId = new ObjectId();
 
         if(files.image)
         {
-            const [url, imageName] = await uploadObjectWithId(movieId, files.image[0]);
-            parsedBody['imageUrl'] = url;
+            const image = files.image[0];
+            checkIfMimeTypeSupported(image.mimetype);
+
+            const [url, imageName] = await uploadObjectWithId(movieId, image);
+            urls['imageUrl'] = url;
             others['imageName'] = imageName;
         }
         if(files.video)
         {
-            const [url, videoName] = await uploadObjectWithId(movieId, files.video[0]);
-            parsedBody['videoUrl'] = url;
+            const video = files.video[0];
+            checkIfMimeTypeSupported(video.mimetype);
+
+            const [url, videoName] = await uploadObjectWithId(movieId, video);
+            urls['videoUrl'] = url;
             others['videoName'] = videoName;
         }
 
-        await movies.updateMovie(movieId, {...others});
+        await movies.addMovie({_id: movieId, ...parsedBody, ...others});
 
         res.status(200).send({
+            _id: movieId,
+            ...urls,
             ...others,
             ...parsedBody,
         });
     }
     catch(e)
     {
-        res.status(500).send(e.message);
+        res.status(e.options?.errorCode || 500).send(e.message);
     }
 }
 

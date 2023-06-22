@@ -11,8 +11,8 @@ module.exports = {
         paypalDomain: env.NODE_ENV === 'development' || env.PAYPAL_TEST ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com',
         imagesBucketName: 'images-bucket',
         videosBucketName: 'videos-bucket',
-        supportedImageTypes: ['png, jpg, jpeg'],
-        supportedVideoTypes: ['mp4, mvk'],
+        supportedImageTypes: ['png', 'jpg', 'jpeg'],
+        supportedVideoTypes: ['mp4', 'mvk'],
     },
     errors: {
         alreadyLogin: {message: 'Already Login', errorCode: 406},
